@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nikolai.moodtracker.R;
@@ -77,7 +79,7 @@ public class SlidingTabsBasicFragment extends Fragment {
          */
         @Override
         public int getCount() {
-            return 5;
+            return 6;
         }
 
         /**
@@ -114,6 +116,42 @@ public class SlidingTabsBasicFragment extends Fragment {
                     container, false);
             // Add the newly created View to the ViewPager
             container.addView(view);
+
+            //change the image and the background color of the screen as the screen is swiped
+            LinearLayout bgElement = (LinearLayout) view.findViewById(R.id.root_layout);
+            ImageView image = (ImageView) view.findViewById(R.id.smiley_image);
+
+            switch (position) {
+                case 0:
+                    image.setImageResource(R.drawable.ic_smiley_happy);
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                    break;
+                case 1:
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorRed));
+                    image.setImageResource(R.drawable.ic_smiley_sad);
+                    break;
+                case 2:
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorGrey));
+                    image.setImageResource(R.drawable.ic_smiley_disappointed);
+                    break;
+                case 3:
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorBlue));
+                    image.setImageResource(R.drawable.ic_smiley_normal);
+                    break;
+                case 4:
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                    image.setImageResource(R.drawable.ic_smiley_happy);
+                    break;
+                case 5:
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorYellow));
+                    image.setImageResource(R.drawable.ic_smiley_super_happy);
+                    break;
+                default:
+                    bgElement.setBackgroundColor(getResources().getColor(R.color.colorGreen));
+                    image.setImageResource(R.drawable.ic_smiley_happy);
+                    break;
+            }
+
 
             // Retrieve a TextView from the inflated View, and update it's text
             TextView title = (TextView) view.findViewById(R.id.item_title);
