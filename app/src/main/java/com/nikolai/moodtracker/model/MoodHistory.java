@@ -1,12 +1,13 @@
 package com.nikolai.moodtracker.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoodHistory {
     private List<Mood> MoodHistory;
 
     public MoodHistory() {
-        List<Mood> initialMoodHistory = new List<Mood>;
+        List<Mood> initialMoodHistory = new ArrayList<Mood>();
         Mood mood1 = new Mood(0);
         Mood mood2 = new Mood(0);
         Mood mood3 = new Mood(0);
