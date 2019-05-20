@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">MoodTracker</string>
     <string name="action_settings">Settings</string>
+    <string name="OneWeekAgo">One Week Ago</string>
+    <string name="six_days_ago">Six days ago</string>
+    <string name="one_day_ago">One day ago</string>
+    <string name="two_days_ago">Two days ago</string>
+    <string name="three_days_ago">Three days ago</string>
+    <string name="four_days_ago">Four days ago</string>
+    <string name="five_days_ago">Five days ago</string>
 </resources>

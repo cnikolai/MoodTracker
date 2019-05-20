@@ -24,7 +24,8 @@ public class FragmentOne extends Fragment {
     private int mColor;
     private int mImageName;
 
-    private ImageButton imageButton;
+    private ImageButton mood_log;
+    private ImageButton mood_chart;
 
 
     // You can modify the parameters to pass in whatever you want
@@ -56,7 +57,7 @@ public class FragmentOne extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_one, container, false);
         //change the image and the background color of the screen as the screen is swiped
@@ -65,9 +66,8 @@ public class FragmentOne extends Fragment {
         image.setImageResource(mImageName);
         //TextView textView = v.findViewById(R.id.textview);
         //textView.setText("Page " + mNum);
-        imageButton = (ImageButton) v.findViewById(R.id.imageButton1);
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        mood_log = (ImageButton) v.findViewById(R.id.mood_log);
+        mood_log.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
@@ -76,12 +76,13 @@ public class FragmentOne extends Fragment {
 //                        "ImageButton clicked!", Toast.LENGTH_SHORT).show();
 
                 EditText editText = new EditText(arg0.getContext());
+                editText.setHint("Enter your mood log here...");
                 AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
                         //Read Update
-                    .setTitle("hi")
-                    .setMessage("this is my app")
+                    .setTitle("Mood Log")
+//                    .setMessage("this is my app")
                         .setView(editText)
-                    .setPositiveButton("Continue..", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Ok..", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // here you can add functions
 
@@ -90,6 +91,18 @@ public class FragmentOne extends Fragment {
                         .create();
                 alertDialog.show();
              }
+
+        });
+        mood_chart = (ImageButton) v.findViewById(R.id.mood_chart);
+        mood_chart.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+//                Toast.makeText(arg0.getContext(),
+//                        "ImageButton clicked!", Toast.LENGTH_SHORT).show();
+                LayoutInflater inflater2 = LayoutInflater.from(getContext());
+                inflater2.inflate(R.layout.mood_chart, container, false);
+            }
 
         });
         return v;
