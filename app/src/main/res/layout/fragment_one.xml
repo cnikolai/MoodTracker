@@ -20,4 +20,28 @@
         android:layout_centerVertical="true"
         app:srcCompat="@drawable/ic_smiley_happy" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:clickable="false">
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            android:background="@null"
+            android:src="@drawable/ic_note_add_black_50dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="20dp"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:src="@drawable/ic_restore_black_50dp" />
+    </RelativeLayout>
+
 </RelativeLayout>

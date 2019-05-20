@@ -96,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mPager = findViewById(R.id.viewpager);
         mPager.setAdapter(mAdapter);
+        mPager.setCurrentItem(0);//number want
+
     }
+
 
     public class MyAdapter extends FragmentPagerAdapter {
         public MyAdapter(FragmentManager fm) {
