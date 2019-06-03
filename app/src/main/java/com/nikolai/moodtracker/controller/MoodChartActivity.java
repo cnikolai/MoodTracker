@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -18,7 +19,13 @@ import java.util.Date;
 public class MoodChartActivity extends AppCompatActivity {
 
     private String currentWeekday;
-    private int Today, TodayMinus1Day, TodayMinus2Days, TodayMinus3Days, TodayMinus4Days, TodayMinus5Days, TodayMinus6Days;
+    private int Today;
+    private int TodayMinus1Day;
+    private int TodayMinus2Days;
+    private int TodayMinus3Days;
+    private int TodayMinus4Days;
+    private int TodayMinus5Days;
+    private int TodayMinus6Days;
     private String Tminus1day;
     private String Tminus2days;
     private String Tminus3days;
@@ -32,6 +39,9 @@ public class MoodChartActivity extends AppCompatActivity {
     private LinearLayout lltodayminus4days;
     private LinearLayout lltodayminus5days;
     private LinearLayout lltodayminus6days;
+    private float percent;
+    private ConstraintLayout clmoodchartlayout;
+    private ConstraintSet constraintSet;
 
     // Shared preferences object
     private SharedPreferences mPreferences;
@@ -108,30 +118,494 @@ public class MoodChartActivity extends AppCompatActivity {
 
         //TODO: if there is a note, then retrieve the note and show the note
 
-
         // hook the data to the interface layout
+
+        //Log.d(TAG, "onCreate: today: "+Today);
         lltoday = (LinearLayout) findViewById(R.id.today);
-        //lltoday.layout_constraintWidth_percent = Today/5; //".6";
-        ConstraintLayout clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
-
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(clmoodchartlayout);
-        constraintSet.constrainPercentWidth(R.id.today,0.2f);
-        constraintSet.applyTo(clmoodchartlayout);
-
-        //TODO: change the color of the background,
+        switch(Today) {
+            case 1:
+                percent = (float) Today/5;
+                lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.today, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) Today/5;
+                lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.today, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) Today/5;
+                lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.today, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) Today/5;
+                lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.today, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.today, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.today, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
         //TODO: do to a for loop that applies changes to all items
         //TODO: see where can improve efficiency
 
         lltodayminus1day = (LinearLayout) findViewById(R.id.one_day_ago);
-        lltodayminus1day = (LinearLayout) findViewById(R.id.one_day_ago);
-        lltodayminus2days = (LinearLayout) findViewById(R.id.two_days_ago);
-        lltodayminus3days = (LinearLayout) findViewById(R.id.three_days_ago);
-        lltodayminus4days = (LinearLayout) findViewById(R.id.four_days_ago);
-        lltodayminus5days = (LinearLayout) findViewById(R.id.five_days_ago);
-        lltodayminus6days = (LinearLayout) findViewById(R.id.six_days_ago);
-        //TODO how do you end an activity ... and ... return to the previous activity? (finish()); yes
+        switch(TodayMinus1Day) {
+            case 1:
+                percent = (float) TodayMinus1Day/5;
+                lltodayminus1day.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.one_day_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) TodayMinus1Day/5;
+                lltodayminus1day.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.one_day_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) TodayMinus1Day/5;
+                lltodayminus1day.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.one_day_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) TodayMinus1Day/5;
+                lltodayminus1day.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.one_day_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltodayminus1day.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.one_day_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltodayminus1day.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.one_day_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
 
+
+        lltodayminus2days = (LinearLayout) findViewById(R.id.two_days_ago);
+        switch(TodayMinus2Days) {
+            case 1:
+                percent = (float) TodayMinus2Days/5;
+                lltodayminus2days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.two_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) TodayMinus2Days/5;
+                lltodayminus2days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.two_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) TodayMinus2Days/5;
+                lltodayminus2days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.two_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) TodayMinus2Days/5;
+                lltodayminus2days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.two_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltodayminus2days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.two_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltodayminus2days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.two_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
+
+        lltodayminus3days = (LinearLayout) findViewById(R.id.three_days_ago);
+        switch(TodayMinus3Days) {
+            case 1:
+                percent = (float) TodayMinus3Days/5;
+                lltodayminus3days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.three_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) TodayMinus3Days/5;
+                lltodayminus3days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.three_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) TodayMinus3Days/5;
+                lltodayminus3days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.three_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) TodayMinus3Days/5;
+                lltodayminus3days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.three_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltodayminus3days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.three_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltodayminus3days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.three_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
+
+        lltodayminus4days = (LinearLayout) findViewById(R.id.four_days_ago);
+        switch(TodayMinus4Days) {
+            case 1:
+                percent = (float) TodayMinus4Days/5;
+                lltodayminus4days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.four_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) TodayMinus4Days/5;
+                lltodayminus4days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.four_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) TodayMinus4Days/5;
+                lltodayminus4days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.four_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) TodayMinus4Days/5;
+                lltodayminus4days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.four_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltodayminus4days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.four_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltodayminus4days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.four_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
+
+        lltodayminus5days = (LinearLayout) findViewById(R.id.five_days_ago);
+        switch(TodayMinus5Days) {
+            case 1:
+                percent = (float) TodayMinus5Days/5;
+                lltodayminus5days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.five_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) TodayMinus5Days/5;
+                lltodayminus5days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.five_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) TodayMinus5Days/5;
+                lltodayminus5days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.five_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) TodayMinus5Days/5;
+                lltodayminus5days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.five_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltodayminus5days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.five_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltodayminus5days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.five_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
+
+        lltodayminus6days = (LinearLayout) findViewById(R.id.six_days_ago);
+        switch(TodayMinus6Days) {
+            case 1:
+                percent = (float) TodayMinus6Days/5;
+                lltodayminus6days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
+                Log.d(TAG, "onCreate: setting background color to yellow");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.six_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 2:
+                percent = (float) TodayMinus6Days/5;
+                lltodayminus6days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.six_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                Log.d(TAG, "onCreate: setting background color to green");
+                break;
+            case 3:
+                percent = (float) TodayMinus6Days/5;
+                lltodayminus6days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
+                Log.d(TAG, "onCreate: setting background color to blue");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.six_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 4:
+                percent = (float) TodayMinus6Days/5;
+                lltodayminus6days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
+                Log.d(TAG, "onCreate: setting background color to grey");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.six_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            case 5:
+                percent = .9999f;
+                lltodayminus6days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
+                Log.d(TAG, "onCreate: setting background color to red");
+                // set the constraint width
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.six_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+                break;
+            default:
+                //there is no data for this day
+                percent = .9999f;
+                lltodayminus6days.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
+                Log.d(TAG, "onCreate: setting background color to green inside default");
+                clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+                constraintSet = new ConstraintSet();
+                constraintSet.clone(clmoodchartlayout);
+                constraintSet.constrainPercentWidth(R.id.six_days_ago, percent);
+                constraintSet.applyTo(clmoodchartlayout);
+        }
 
     }
 

@@ -19,6 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Today"/>
 
         <ImageView
@@ -44,6 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/one_day_ago"/>
         <ImageView
             android:id="@+id/one_day_ago_mood_note"
@@ -67,6 +69,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/two_days_ago"/>
         <ImageView
             android:id="@+id/two_days_ago_mood_note"
@@ -90,6 +93,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/three_days_ago"/>
         <ImageView
             android:id="@+id/three_days_ago_mood_note"
@@ -113,6 +117,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/four_days_ago"/>
         <ImageView
             android:id="@+id/four_days_ago_mood_note"
@@ -136,6 +141,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/five_days_ago"/>
         <ImageView
             android:id="@+id/five_days_ago_mood_note"
@@ -159,6 +165,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/six_days_ago"/>
         <ImageView
             android:id="@+id/six_days_ago_mood_note"

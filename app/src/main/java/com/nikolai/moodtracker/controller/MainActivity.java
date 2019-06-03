@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements Serializable {
+
 
     public static final String TAG = "MainActivity";
     private String currentWeekday;
@@ -49,8 +51,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        Log.d(TAG, "instance #:" + this);
+        //Log.d(TAG, "instance #:" + this);
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE");
@@ -62,39 +65,66 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         mPager = findViewById(R.id.viewpager);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(1);//number want
+        mPager.addOnPageChangeListener(pageChangeListener);
+
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         // Retrieve a PendingIntent that will perform a broadcast
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        int interval = 10000;
+        int interval = 1000000000;
 
         calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.HOUR_OF_DAY, 7); //24 hour calendar
+        calendar.set(Calendar.HOUR_OF_DAY, 12); //24 hour calendar
         calendar.set(Calendar.MINUTE, 24);
         calendar.set(Calendar.SECOND, 00);
 
-//        Intent myIntent = new Intent(getApplicationContext(),
-//                AlarmReceiver.class);
-//        Bundle mbundle = new Bundle();
-//        mbundle.putSerializable("VerticalViewPager", (Serializable) mPager);
-//        pendingIntent.putExtras("bundle", mbundle);
+        //manager.setRepeating(AlarmManager.RTC_WAKEUP, /*System.currentTimeMillis()*/calendar.getTimeInMillis(), interval, pendingIntent);
 
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, /*System.currentTimeMillis()*/calendar.getTimeInMillis(), interval, pendingIntent);
-
-        //pendingIntent.putExtra("VerticalViewPager", mPager);
         Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
     }
+
+    private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+
+        int currentPosition = 0;
+
+        @Override
+        public void onPageSelected(int newPosition) {
+            currentPosition = newPosition;
+            Log.d(TAG, "onPageSelected: currentposition: "+currentPosition);
+            preferencesEditor = mPreferences.edit();
+            preferencesEditor.putInt(currentWeekday, currentPosition+1);
+            preferencesEditor.apply();
+        }
+
+        @Override
+        public void onPageScrolled(int arg0, float arg1, int arg2) { }
+
+        public void onPageScrollStateChanged(int arg0) { }
+
+    };
+
 
     //TODO: split into smaller methods of oncreate
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Toast.makeText(this, "Inside new intent of main activity", Toast.LENGTH_SHORT).show();
-        mPager.setCurrentItem(1);
+        Log.d(TAG, "Inside new intent of main activity");
+        int midnight = intent.getIntExtra("midnight",1);
+        Log.d(TAG, "onNewIntent: midnight: "+ midnight);
+        if (midnight == 0) {
+            //set the task to run in the background, if not already running in foreground //TODO: if not already running in foreground
+            moveTaskToBack(true);
+            //set to the default screen and default values for the current day
+            preferencesEditor = mPreferences.edit();
+            preferencesEditor.putInt(currentWeekday, 2);
+            preferencesEditor.apply();
+            mPager.setCurrentItem(1);
+
+        }
     }
 
     public class MyAdapter extends FragmentPagerAdapter {
@@ -107,54 +137,68 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             return NUMBER_OF_PAGES;
         }
 
-        //TODO: put in current weekday note to sharedprefs
-        //TODO: fire weekday 0 at time (https://stackoverflow.com/questions/8034127/how-to-remove-some-key-value-pair-from-sharedpreferences)
         //TODO: ??? unit testing (expresso)
         //TODO: silence all toast messages, except in the mood history
         //TODO: change alarm clock interval to be 24 hours later
-        //TODO: ??? how to pass an object to a pending intent, or get object from current context (basically fire an event at midnight)
 
         @Override
         public Fragment getItem(int position) {
-
+            Log.d(TAG, "getItem: position "+ position);
+            //if this works, store the preferences here
             switch (position) {
                 case 0:
-                    //ContextCompat.getColor(MainActivity.this, R.color.colorYellow)
+                    Log.d(TAG, "changing sharedpreferences to yellow for the day");
                     //Color.parseColor("#00ff00")
-                    mPager.setCurrentItem(0);
                     preferencesEditor = mPreferences.edit();
                     preferencesEditor.putInt(currentWeekday, 1);
                     preferencesEditor.apply();
+                    mPager.setCurrentItem(0);
                     return MoodFragment.newInstance(0, ContextCompat.getColor(MainActivity.this, R.color.colorYellow),R.drawable.ic_smiley_super_happy);
                 case 1:
+                    Log.d(TAG, "changing sharedpreferences to green for the day");
                     // return a different Fragment class here
                     // if you want want a completely different layout
-                    mPager.setCurrentItem(1);
                     preferencesEditor = mPreferences.edit();
                     preferencesEditor.putInt(currentWeekday, 2);
                     preferencesEditor.apply();
+                    mPager.setCurrentItem(1);
                     return MoodFragment.newInstance(1, ContextCompat.getColor(MainActivity.this, R.color.colorGreen),R.drawable.ic_smiley_happy);
                 case 2:
-                    mPager.setCurrentItem(2);
+                    Log.d(TAG, "changing sharedpreferences to blue for the day");
                     preferencesEditor = mPreferences.edit();
                     preferencesEditor.putInt(currentWeekday, 3);
                     preferencesEditor.apply();
+                    mPager.setCurrentItem(2);
                     return MoodFragment.newInstance(2, ContextCompat.getColor(MainActivity.this, R.color.colorBlue),R.drawable.ic_smiley_normal);
                 case 3:
-                    mPager.setCurrentItem(3);
+                    Log.d(TAG, "changing sharedpreferences to grey for the day");
                     preferencesEditor = mPreferences.edit();
                     preferencesEditor.putInt(currentWeekday, 4);
                     preferencesEditor.apply();
+                    mPager.setCurrentItem(3);
                     return MoodFragment.newInstance(3, ContextCompat.getColor(MainActivity.this, R.color.colorGrey),R.drawable.ic_smiley_disappointed);
                 case 4:
-                    mPager.setCurrentItem(4);
+                    Log.d(TAG, "changing sharedpreferences to red for the day");
                     preferencesEditor = mPreferences.edit();
                     preferencesEditor.putInt(currentWeekday, 5);
                     preferencesEditor.apply();
+                    mPager.setCurrentItem(4);
                     return MoodFragment.newInstance(4, ContextCompat.getColor(MainActivity.this, R.color.colorRed),R.drawable.ic_smiley_sad);
                 default:
                     return null;
             }
         }
+//        // Force a refresh of the page when a different fragment is displayed
+//        @Override
+//        public int getItemPosition(Object object) {
+//            // this method will be called for every fragment in the ViewPager
+//            if (object instanceof MoodFragment) {
+//                return POSITION_UNCHANGED; // don't force a reload
+//            } else {
+//                // POSITION_NONE means something like: this fragment is no longer valid
+//                // triggering the ViewPager to re-build the instance of this fragment.
+//                return POSITION_NONE;
+//            }
+//        }
     }
 }
