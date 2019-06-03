@@ -2,6 +2,7 @@ package com.nikolai.moodtracker.controller;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +15,7 @@ import android.widget.ImageView;
 
 import com.nikolai.moodtracker.R;
 
-public class FragmentOne extends Fragment {
+public class MoodFragment extends Fragment {
 
     private static final String MY_NUM_KEY = "num";
     private static final String MY_COLOR_KEY = "color";
@@ -29,8 +30,8 @@ public class FragmentOne extends Fragment {
 
 
     // You can modify the parameters to pass in whatever you want
-    static FragmentOne newInstance(int num, int color, int smiley_type) {
-        FragmentOne f = new FragmentOne();
+    static MoodFragment newInstance(int num, int color, int smiley_type) {
+        MoodFragment f = new MoodFragment();
         Bundle args = new Bundle();
         args.putInt(MY_NUM_KEY, num);
         args.putInt(MY_COLOR_KEY, color);
@@ -78,17 +79,28 @@ public class FragmentOne extends Fragment {
                 EditText editText = new EditText(arg0.getContext());
                 editText.setHint("Enter your mood log here...");
                 AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
-                        //Read Update
+                    //Read Update
                     .setTitle("Mood Log")
-//                    .setMessage("this is my app")
-                        .setView(editText)
-                    .setPositiveButton("Ok..", new DialogInterface.OnClickListener() {
+//                  .setMessage("this is my app")
+                    .setView(editText)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // here you can add functions
-
+                       // here you can add functions
                     }
                     })
-                        .create();
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // here you can add functions
+                                //finish();
+                            }
+                        })
+//                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                // here you can add functions
+//                                //finish();
+//                            });
+//                    })
+                    .create();
                 alertDialog.show();
              }
 
@@ -100,8 +112,10 @@ public class FragmentOne extends Fragment {
             public void onClick(View arg0) {
 //                Toast.makeText(arg0.getContext(),
 //                        "ImageButton clicked!", Toast.LENGTH_SHORT).show();
-                LayoutInflater inflater2 = LayoutInflater.from(getContext());
-                inflater2.inflate(R.layout.mood_chart, container, false);
+//                LayoutInflater inflater2 = LayoutInflater.from(getContext());
+//                inflater2.inflate(R.layout.mood_chart, container, false);
+                Intent intent = new Intent(getActivity(), MoodChartActivity.class);
+                startActivity(intent);
             }
 
         });

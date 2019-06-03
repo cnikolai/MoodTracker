@@ -8,4 +8,5 @@
     <string name="three_days_ago">Three days ago</string>
     <string name="four_days_ago">Four days ago</string>
     <string name="five_days_ago">Five days ago</string>
+    <string name="title_activity_mood_chart">MoodChartActivity</string>
 </resources>
