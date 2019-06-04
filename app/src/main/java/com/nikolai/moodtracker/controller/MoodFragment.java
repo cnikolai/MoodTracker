@@ -3,6 +3,7 @@ package com.nikolai.moodtracker.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nikolai.moodtracker.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class MoodFragment extends Fragment {
 
@@ -28,12 +33,21 @@ public class MoodFragment extends Fragment {
     private int mColor;
     private int mImageName;
     private static int mood_index;
+    private String currentWeekday;
 
     private ImageButton mood_log;
     private ImageButton mood_chart;
-    private TextView mEditText;
 
     public static final String TAG = "MoodFragment";
+
+    private SharedPreferences.Editor preferencesEditor;
+
+    // Shared preferences object
+    private SharedPreferences mPreferences;
+
+    // Name of shared preferences file
+    private String sharedPrefFile =
+            "com.nikolai.moodtracker.moodsharedprefs";
 
 //    public void onResumeFragment() {
 //        Log.i(TAG, "onResumeFragment()");
@@ -70,31 +84,39 @@ public class MoodFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
+        mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+
         Toast.makeText(this.getContext(), "inside oncreateview of fragment", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "inside onCreateView of moodfragment: mood index-1: " + mNum + getShownIndex());
         //this.getCurrentItem();
+        //mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         View v = inflater.inflate(R.layout.fragment_one, container, false);
         //change the image and the background color of the screen as the screen is swiped
         v.setBackgroundColor(mColor);
         ImageView image = (ImageView) v.findViewById(R.id.smiley_image);
         image.setImageResource(mImageName);
-        mEditText = (TextView) v.findViewById(R.id.page);
         Log.d(TAG, "onCreateView: mNum: " + mNum);
         mood_log = (ImageButton) v.findViewById(R.id.mood_log);
         mood_log.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                EditText editText = new EditText(arg0.getContext());
-                editText.setHint("Enter your mood log here...");
+                final EditText editText = new EditText(arg0.getContext());
+                editText.setHint("Enter your mood log entry here...");
                 AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
                     //Read Update
                     .setTitle("Mood Log")
-//                  .setMessage("this is my app")
                     .setView(editText)
                     .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                        // here you can add functions
+                        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+                        Date currentDate = new Date();
+                        currentWeekday = sdf.format(currentDate);
+                        preferencesEditor = mPreferences.edit();
+                        preferencesEditor.putString(currentWeekday+"moodnote", "testing mood log");
+                        preferencesEditor.apply();
+                        Log.d(TAG, "inside edit text of moodfragment: " + editText);
                     }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

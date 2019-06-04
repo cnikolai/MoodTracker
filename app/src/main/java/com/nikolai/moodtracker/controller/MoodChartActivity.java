@@ -7,6 +7,8 @@ import android.support.constraint.ConstraintSet;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.nikolai.moodtracker.R;
@@ -26,6 +28,20 @@ public class MoodChartActivity extends AppCompatActivity {
     private int TodayMinus4Days;
     private int TodayMinus5Days;
     private int TodayMinus6Days;
+    private ImageView ivToday;
+    private ImageView ivTodayMinus1Day;
+    private ImageView ivTodayMinus2Days;
+    private ImageView ivTodayMinus3Days;
+    private ImageView ivTodayMinus4Days;
+    private ImageView ivTodayMinus5Days;
+    private ImageView ivTodayMinus6Days;
+    private String TodayMoodNote;
+    private String TodayMinus1DayMoodNote;
+    private String TodayMinus2DaysMoodNote;
+    private String TodayMinus3DaysMoodNote;
+    private String TodayMinus4DaysMoodNote;
+    private String TodayMinus5DaysMoodNote;
+    private String TodayMinus6DaysMoodNote;
     private String Tminus1day;
     private String Tminus2days;
     private String Tminus3days;
@@ -66,7 +82,9 @@ public class MoodChartActivity extends AppCompatActivity {
         Date currentDate = new Date();
         currentWeekday = sdf.format(currentDate);
         Today = mPreferences.getInt(currentWeekday,0);
+        TodayMoodNote = mPreferences.getString(currentWeekday + "moodnote","mood note");
         Log.d(TAG, currentWeekday+": "+Today);
+        Log.d(TAG, currentWeekday+" moodnote: "+TodayMoodNote);
 
 
         //get the previous 1 day
@@ -80,41 +98,52 @@ public class MoodChartActivity extends AppCompatActivity {
         c.add(Calendar.DAY_OF_MONTH, -1);
         Tminus1day = sdf.format(c.getTime());
         TodayMinus1Day = mPreferences.getInt(Tminus1day,0);
+        TodayMinus1DayMoodNote = mPreferences.getString(Tminus1day + "moodnote","mood note");
         Log.d(TAG, Tminus1day+": "+TodayMinus1Day);
+        Log.d(TAG, Tminus1day+" moodnote: "+TodayMinus1DayMoodNote);
 
 
         //Decrementing the date by 2 days
         c.add(Calendar.DAY_OF_MONTH, -1);
         Tminus2days = sdf.format(c.getTime());
         TodayMinus2Days = mPreferences.getInt(Tminus2days,0);
+        TodayMinus2DaysMoodNote = mPreferences.getString(Tminus2days + "moodnote","mood note");
         Log.d(TAG, Tminus2days+": "+TodayMinus2Days);
-
+        Log.d(TAG, Tminus2days+" moodnote: "+TodayMinus2DaysMoodNote);
 
         //Decrementing the date by 3 days
         c.add(Calendar.DAY_OF_MONTH, -1);
         Tminus3days = sdf.format(c.getTime());
         TodayMinus3Days = mPreferences.getInt(Tminus3days,0);
+        TodayMinus3DaysMoodNote = mPreferences.getString(Tminus3days + "moodnote","mood note");
         Log.d(TAG, Tminus3days+": "+TodayMinus3Days);
+        Log.d(TAG, Tminus3days+" moodnote: "+TodayMinus3DaysMoodNote);
 
 
         //Decrementing the date by 4 days
         c.add(Calendar.DAY_OF_MONTH, -1);
         Tminus4days = sdf.format(c.getTime());
         TodayMinus4Days = mPreferences.getInt(Tminus4days,0);
+        TodayMinus4DaysMoodNote = mPreferences.getString(Tminus4days + "moodnote","mood note");
         Log.d(TAG, Tminus4days+": "+TodayMinus4Days);
+        Log.d(TAG, Tminus4days+" moodnote: "+TodayMinus4DaysMoodNote);
 
         //Decrementing the date by 5 days
         c.add(Calendar.DAY_OF_MONTH, -1);
         Tminus5days = sdf.format(c.getTime());
         TodayMinus5Days = mPreferences.getInt(Tminus5days,0);
+        TodayMinus5DaysMoodNote = mPreferences.getString(Tminus5days + "moodnote","mood note");
         Log.d(TAG, Tminus5days+": "+TodayMinus5Days);
+        Log.d(TAG, Tminus5days+" moodnote: "+TodayMinus5DaysMoodNote);
 
 
         //Decrementing the date by 6 days
         c.add(Calendar.DAY_OF_MONTH, -1);
         Tminus6days = sdf.format(c.getTime());
         TodayMinus6Days = mPreferences.getInt(Tminus6days,0);
+        TodayMinus6DaysMoodNote = mPreferences.getString(Tminus6days + "moodnote","mood note");
         Log.d(TAG, Tminus6days+": "+TodayMinus6Days);
+        Log.d(TAG, Tminus6days+" moodnote: "+TodayMinus6DaysMoodNote);
 
         //TODO: if there is a note, then retrieve the note and show the note
 
@@ -189,6 +218,32 @@ public class MoodChartActivity extends AppCompatActivity {
                 constraintSet.constrainPercentWidth(R.id.today, percent);
                 constraintSet.applyTo(clmoodchartlayout);
         }
+        //display the mood note for this day, if it exists
+        ivToday = (ImageView) findViewById(R.id.today_mood_note);
+        if (TodayMoodNote != "mood note") {
+            //display the mood note on the screen and add a clickable event to it.
+            ivToday.setVisibility(View.VISIBLE);
+//            ivToday.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View arg0) {
+//                    final TextView textview = new TextView(arg0.getContext());
+//                    AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
+//                            //Read Update
+//                            .setTitle("Mood Log")
+//                            .setView(textview)
+//                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    mPreferences.getString(currentWeekday + "moodnote", "testing mood log");
+//                                    Log.d(TAG, "inside view text mood of moodfragment: " + textview);
+//                                }
+//                            })
+//                            .create();
+//                    alertDialog.show();
+//                }
+//            });
+        }
+
+        //TODO: set mood logs to visible and invsible
         //TODO: do to a for loop that applies changes to all items
         //TODO: see where can improve efficiency
 

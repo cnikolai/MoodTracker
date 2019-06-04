@@ -42,11 +42,6 @@
             android:layout_alignParentRight="true"
             android:background="@null"
             android:src="@drawable/ic_restore_black_50dp" />
-
-        <TextView
-            android:id="@+id/page"
-            android:layout_width="146dp"
-            android:layout_height="20dp" />
     </RelativeLayout>
 
 </RelativeLayout>

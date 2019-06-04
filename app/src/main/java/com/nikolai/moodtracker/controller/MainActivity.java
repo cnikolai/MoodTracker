@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_main);
         //Log.d(TAG, "instance #:" + this);
 
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE");
         Date currentDate = new Date();
@@ -65,10 +66,12 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         mPager = findViewById(R.id.viewpager);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(1);//number want
+        preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(currentWeekday, 2);
+        preferencesEditor.apply();
         mPager.addOnPageChangeListener(pageChangeListener);
 
 
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         // Retrieve a PendingIntent that will perform a broadcast
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -122,11 +125,19 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             //set the task to run in the background, if not already running in foreground //TODO: if not already running in foreground
             //moveTaskToBack(true);
             //set to the default screen and default values for the current day
+            //for the mood history - resets color to green
             preferencesEditor = mPreferences.edit();
             preferencesEditor.putInt(currentWeekday, 2);
             preferencesEditor.apply();
             mPager.setCurrentItem(1);
-
+            //for the mood history, removes mood note from current day
+            if (mPreferences.contains(currentWeekday+"moodnote")) {
+                //remove the note from shared preferences
+                preferencesEditor = mPreferences.edit();
+                preferencesEditor.remove(currentWeekday + "moodnote");
+                preferencesEditor.apply();
+                //TODO: set mood note to invisible in interface
+            }
         }
     }
 
