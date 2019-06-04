@@ -14,6 +14,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.nikolai.moodtracker.R;
@@ -136,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 preferencesEditor = mPreferences.edit();
                 preferencesEditor.remove(currentWeekday + "moodnote");
                 preferencesEditor.apply();
-                //TODO: set mood note to invisible in interface
+                ImageView ivToday = (ImageView) findViewById(R.id.today_mood_note);
+                ivToday.setVisibility(View.INVISIBLE);
             }
         }
     }

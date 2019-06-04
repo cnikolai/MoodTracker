@@ -87,10 +87,8 @@ public class MoodFragment extends Fragment {
         mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         Toast.makeText(this.getContext(), "inside oncreateview of fragment", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "inside onCreateView of moodfragment: mood index-1: " + mNum + getShownIndex());
-        //this.getCurrentItem();
-        //mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         View v = inflater.inflate(R.layout.fragment_one, container, false);
+
         //change the image and the background color of the screen as the screen is swiped
         v.setBackgroundColor(mColor);
         ImageView image = (ImageView) v.findViewById(R.id.smiley_image);
@@ -114,9 +112,9 @@ public class MoodFragment extends Fragment {
                         Date currentDate = new Date();
                         currentWeekday = sdf.format(currentDate);
                         preferencesEditor = mPreferences.edit();
-                        preferencesEditor.putString(currentWeekday+"moodnote", "testing mood log");
+                        preferencesEditor.putString(currentWeekday+"moodnote", editText.getText().toString().trim());
                         preferencesEditor.apply();
-                        Log.d(TAG, "inside edit text of moodfragment: " + editText);
+                        Log.d(TAG, "inside edit text of moodfragment: " + editText.getText().toString().trim());
                     }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
