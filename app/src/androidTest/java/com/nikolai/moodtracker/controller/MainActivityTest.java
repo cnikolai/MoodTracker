@@ -1,6 +1,8 @@
 package com.nikolai.moodtracker.controller;
 
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -14,6 +16,9 @@ import com.nikolai.moodtracker.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +42,7 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
+    //when mood log button is pushed
     @Test
     public void mainActivityTest() {
         ViewInteraction verticalViewPager = onView(
@@ -79,11 +85,12 @@ public class MainActivityTest {
                         isDisplayed()));
         verticalViewPager4.perform(swipeRight());
 
+        //when mood log button is pressed
         ViewInteraction appCompatImageButton = onView(
                 allOf(withId(R.id.mood_log),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.RelativeLayout")),
+                                        IsInstanceOf.<View>instanceOf(android.widget.RelativeLayout.class),
                                         1),
                                 0),
                         isDisplayed()));
@@ -97,8 +104,23 @@ public class MainActivityTest {
                                         0)),
                         0),
                         isDisplayed()));
-        editText.perform(replaceText("te"), closeSoftKeyboard());
+        editText.perform(replaceText("test"), closeSoftKeyboard());
     }
+
+    //when mood history button is pushed
+    @Test
+    public void mainActivityTest7() {
+        ViewInteraction appCompatImageButton = onView(
+                allOf(withId(R.id.mood_chart),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        1),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+    }
+
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
@@ -117,5 +139,53 @@ public class MainActivityTest {
                         && view.equals(((ViewGroup) parent).getChildAt(position));
             }
         };
+    }
+
+
+    @Test
+    public void testSetAlarm() throws Exception {
+        AlarmReceiver receiver = new AlarmReceiver();
+        receiver.setAlarm(context);
+        assertThat(isAlarmSet()).isTrue();
+    }
+
+
+
+//    @Test
+//    public void getNextScheduledAlarm_shouldReturnRepeatingAlarms() {
+//        assertThat(AlarmManager.getNextScheduledAlarm()).isNull();
+//        long now = new Date().getTime();
+//        Intent intent = new Intent(activity, activity.getClass());
+//        PendingIntent pendingIntent = PendingIntent.getActivity(activity, 0, intent, 0);
+//        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, now, INTERVAL_HOUR, pendingIntent);
+//        AlarmManager.ScheduledAlarm scheduledAlarm = shadowAlarmManager.getNextScheduledAlarm();
+//        assertThat(AlarmManager.getNextScheduledAlarm()).isNull();
+//        assertRepeatingScheduledAlarm(now, INTERVAL_HOUR, pendingIntent, scheduledAlarm);
+//    }
+
+
+//    @Test
+//    public void set_shouldRegisterAlarm() {
+//        assertThat(shadowAlarmManager.getNextScheduledAlarm()).isNull();
+//        alarmManager.set(AlarmManager.ELAPSED_REALTIME, 0,
+//                PendingIntent.getActivity(activity, 0, new Intent(activity, activity.getClass()), 0));
+//        assertThat(shadowAlarmManager.getNextScheduledAlarm()).isNotNull();
+//    }
+
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+    }
+
+    @Test
+    public void onCreate() {
+
+    }
+
+    @Test
+    public void onNewIntent() {
     }
 }

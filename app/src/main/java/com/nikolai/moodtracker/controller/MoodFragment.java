@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.nikolai.moodtracker.R;
 
@@ -69,7 +68,7 @@ public class MoodFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this.getContext(), "Inside Fragment", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this.getContext(), "Inside Fragment", Toast.LENGTH_SHORT).show();
         mNum = getArguments() != null ? getArguments().getInt(MY_NUM_KEY) : 0;
         mColor = getArguments() != null ? getArguments().getInt(MY_COLOR_KEY) : Color.BLACK;
         mImageName = getArguments() != null ? getArguments().getInt(SMILEY_TYPE) : R.drawable.ic_smiley_happy;
@@ -86,7 +85,7 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        Toast.makeText(this.getContext(), "inside oncreateview of fragment", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this.getContext(), "inside oncreateview of fragment", Toast.LENGTH_SHORT).show();
         View v = inflater.inflate(R.layout.fragment_one, container, false);
 
         //change the image and the background color of the screen as the screen is swiped
@@ -144,8 +143,8 @@ public class MoodFragment extends Fragment {
     @Override
     public void onResume () {
         super.onResume();
-        Toast.makeText(this.getContext(), "inside onResume of fragment", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onResume: " + mNum);
+        //Toast.makeText(this.getContext(), "inside onResume of fragment", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "inside onResume of fragment: " + mNum);
     }
 
 

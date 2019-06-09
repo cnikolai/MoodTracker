@@ -8,23 +8,22 @@ import org.junit.Test;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class MoodTrackerUnitTest {
-//    @Test
-//    public void addition_isCorrect() {
-//        assertEquals(4, 2 + 2);
-//    }
-//
-    //TODO: install expresso
+
     //TODO: create unit tests
+
+
+
+
     @Test
     public void leaving_and_returning_to_app() {
         //the app should return to the same spot that it left off at
         //the app should reset at midnight
+        //reset: app should remove current day's note invisible, app should set start screen to green happy face.
     }
 
     @Test
     public void entering_mood() {
         //should keep the most current mood and mood note while in current day
-        //should reset to screen 1 and no notes for current day at midnight
     }
 
     @Test

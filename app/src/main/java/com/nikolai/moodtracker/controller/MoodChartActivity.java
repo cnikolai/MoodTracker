@@ -1,24 +1,24 @@
 package com.nikolai.moodtracker.controller;
 
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+        import android.content.DialogInterface;
+        import android.content.SharedPreferences;
+        import android.os.Bundle;
+        import android.support.constraint.ConstraintLayout;
+        import android.support.constraint.ConstraintSet;
+        import android.support.v4.content.ContextCompat;
+        import android.support.v7.app.AlertDialog;
+        import android.support.v7.app.AppCompatActivity;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.ImageView;
+        import android.widget.LinearLayout;
 
-import com.nikolai.moodtracker.R;
+        import com.nikolai.moodtracker.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+        import java.text.ParseException;
+        import java.text.SimpleDateFormat;
+        import java.util.Calendar;
+        import java.util.Date;
 
 public class MoodChartActivity extends AppCompatActivity {
 
@@ -76,8 +76,6 @@ public class MoodChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mood_chart);
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-
-        //TODO: what if there is not enough data for the last 7 days in shared preferences?
 
         // retrieve shared preferences for last 7 days
         SimpleDateFormat sdf = new SimpleDateFormat("EEE");
@@ -242,7 +240,6 @@ public class MoodChartActivity extends AppCompatActivity {
             });
         }
 
-        //TODO: set mood logs to visible and invsible
         //TODO: do to a for loop that applies changes to all items
         //TODO: see where can improve efficiency
 
@@ -795,3 +792,4 @@ public class MoodChartActivity extends AppCompatActivity {
     }
 
 }
+
