@@ -48,11 +48,6 @@ public class MoodFragment extends Fragment {
     private String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
 
-//    public void onResumeFragment() {
-//        Log.i(TAG, "onResumeFragment()");
-//        Toast.makeText(getActivity(), "onResumeFragment():" + TAG, Toast.LENGTH_SHORT).show();
-//    }
-
     // You can modify the parameters to pass in whatever you want
     static MoodFragment newInstance(int num, int color, int smiley_type) {
         //mood_index = num+1;
@@ -85,7 +80,6 @@ public class MoodFragment extends Fragment {
                              Bundle savedInstanceState) {
         mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        //Toast.makeText(this.getContext(), "inside oncreateview of fragment", Toast.LENGTH_SHORT).show();
         View v = inflater.inflate(R.layout.fragment_one, container, false);
 
         //change the image and the background color of the screen as the screen is swiped
@@ -98,33 +92,8 @@ public class MoodFragment extends Fragment {
 
             @Override
             public void onClick(View arg0) {
-                final EditText editText = new EditText(arg0.getContext());
-                editText.setHint("Enter your mood log entry here...");
-                AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
-                    //Read Update
-                    .setTitle("Mood Log")
-                    .setView(editText)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                       // here you can add functions
-                        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-                        Date currentDate = new Date();
-                        currentWeekday = sdf.format(currentDate);
-                        preferencesEditor = mPreferences.edit();
-                        preferencesEditor.putString(currentWeekday+"moodnote", editText.getText().toString().trim());
-                        preferencesEditor.apply();
-                        Log.d(TAG, "inside edit text of moodfragment: " + editText.getText().toString().trim());
-                    }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // here you can add functions
-                            //finish();
-                        }
-                    })
-                    .create();
-                alertDialog.show();
-             }
+                showDialog(arg0);
+            }
 
         });
         mood_chart = (ImageButton) v.findViewById(R.id.mood_chart);
@@ -140,10 +109,35 @@ public class MoodFragment extends Fragment {
         return v;
     }
 
+    private void showDialog(View arg0) {
+        final EditText editText = new EditText(arg0.getContext());
+        editText.setHint("Enter your mood log entry here...");
+        AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
+            //Read Update
+            .setTitle("Mood Log")
+            .setView(editText)
+            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+                Date currentDate = new Date();
+                currentWeekday = sdf.format(currentDate);
+                preferencesEditor = mPreferences.edit();
+                preferencesEditor.putString(currentWeekday+"moodnote", editText.getText().toString().trim());
+                preferencesEditor.apply();
+                Log.d(TAG, "inside edit text of moodfragment: " + editText.getText().toString().trim());
+            }
+            })
+            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            })
+            .create();
+        alertDialog.show();
+    }
+
     @Override
     public void onResume () {
         super.onResume();
-        //Toast.makeText(this.getContext(), "inside onResume of fragment", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "inside onResume of fragment: " + mNum);
     }
 

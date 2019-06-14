@@ -26,7 +26,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
-
     public static final String TAG = "MainActivity";
     private String currentWeekday;
     private SharedPreferences.Editor preferencesEditor;
@@ -65,12 +64,11 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         mAdapter = new MyAdapter(getSupportFragmentManager());
         mPager = findViewById(R.id.viewpager);
         mPager.setAdapter(mAdapter);
-        mPager.setCurrentItem(1);//number want
+        mPager.setCurrentItem(1);
         preferencesEditor = mPreferences.edit();
         preferencesEditor.putInt(currentWeekday, 2);
         preferencesEditor.apply();
         mPager.addOnPageChangeListener(pageChangeListener);
-
 
         // Retrieve a PendingIntent that will perform a broadcast
         Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -124,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     };
 
-
     //TODO: split into smaller methods of oncreate
 
     @Override
@@ -134,23 +131,27 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         int midnight = intent.getIntExtra("midnight",1);
         Log.d(TAG, "onNewIntent: midnight: "+ midnight);
         if (midnight == 0) {
-            //set the task to run in the background, if not already running in foreground //TODO: if not already running in foreground
-            //moveTaskToBack(true);
             //set to the default screen and default values for the current day
-            //for the mood history - resets color to green
+            resetDay();
+        }
+    }
+
+    private void resetDay() {
+        //set the task to run in the background, if not already running in foreground
+        //moveTaskToBack(true);
+        //for the mood history - resets color to green
+        preferencesEditor = mPreferences.edit();
+        preferencesEditor.putInt(currentWeekday, 2);
+        preferencesEditor.apply();
+        mPager.setCurrentItem(1);
+        //for the mood history, removes mood note from current day
+        if (mPreferences.contains(currentWeekday+"moodnote")) {
+            //remove the note from shared preferences
             preferencesEditor = mPreferences.edit();
-            preferencesEditor.putInt(currentWeekday, 2);
+            preferencesEditor.remove(currentWeekday + "moodnote");
             preferencesEditor.apply();
-            mPager.setCurrentItem(1);
-            //for the mood history, removes mood note from current day
-            if (mPreferences.contains(currentWeekday+"moodnote")) {
-                //remove the note from shared preferences
-                preferencesEditor = mPreferences.edit();
-                preferencesEditor.remove(currentWeekday + "moodnote");
-                preferencesEditor.apply();
-                ImageView ivToday = (ImageView) findViewById(R.id.today_mood_note);
-                ivToday.setVisibility(View.INVISIBLE);
-            }
+            ImageView ivToday = (ImageView) findViewById(R.id.today_mood_note);
+            ivToday.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -164,29 +165,24 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             return NUMBER_OF_PAGES;
         }
 
-        //TODO: ??? unit testing (expresso)
-        //TODO: silence all toast messages, except in the mood history
-        //TODO: change alarm clock interval to be 24 hours later
-        //TODO: make all days mood charts visibile, not just today
-
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
                     Log.d(TAG, "changing sharedpreferences to yellow for the day");
-                    return MoodFragment.newInstance(0, ContextCompat.getColor(MainActivity.this, R.color.colorYellow),R.drawable.ic_smiley_super_happy);
+                    return MoodFragment.newInstance(4, ContextCompat.getColor(MainActivity.this, R.color.colorYellow),R.drawable.ic_smiley_super_happy);
                 case 1:
                     Log.d(TAG, "changing sharedpreferences to green for the day");
-                    return MoodFragment.newInstance(1, ContextCompat.getColor(MainActivity.this, R.color.colorGreen),R.drawable.ic_smiley_happy);
+                    return MoodFragment.newInstance(3, ContextCompat.getColor(MainActivity.this, R.color.colorGreen),R.drawable.ic_smiley_happy);
                 case 2:
                     Log.d(TAG, "changing sharedpreferences to blue for the day");
                     return MoodFragment.newInstance(2, ContextCompat.getColor(MainActivity.this, R.color.colorBlue),R.drawable.ic_smiley_normal);
                 case 3:
                     Log.d(TAG, "changing sharedpreferences to grey for the day");
-                    return MoodFragment.newInstance(3, ContextCompat.getColor(MainActivity.this, R.color.colorGrey),R.drawable.ic_smiley_disappointed);
+                    return MoodFragment.newInstance(2, ContextCompat.getColor(MainActivity.this, R.color.colorGrey),R.drawable.ic_smiley_disappointed);
                 case 4:
                     Log.d(TAG, "changing sharedpreferences to red for the day");
-                    return MoodFragment.newInstance(4, ContextCompat.getColor(MainActivity.this, R.color.colorRed),R.drawable.ic_smiley_sad);
+                    return MoodFragment.newInstance(1, ContextCompat.getColor(MainActivity.this, R.color.colorRed),R.drawable.ic_smiley_sad);
                 default:
                     return null;
             }

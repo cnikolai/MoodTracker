@@ -1,17 +1,16 @@
 package com.nikolai.moodtracker.controller;
 
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.nikolai.moodtracker.R;
 
@@ -25,7 +24,6 @@ public class MoodChartActivity extends AppCompatActivity {
 
     private String currentWeekday;
     private int Today;
-    private ImageView ivToday;
     private String TodayMoodNote;
     private String Tminus1day;
     private LinearLayout lltoday;
@@ -65,7 +63,6 @@ public class MoodChartActivity extends AppCompatActivity {
         mood_charts.add(R.id.four_days_ago_mood_note);
         mood_charts.add(R.id.five_days_ago_mood_note);
         mood_charts.add(R.id.six_days_ago_mood_note);
-        mood_charts.add(R.id.seven_days_ago_mood_note);
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
@@ -75,55 +72,54 @@ public class MoodChartActivity extends AppCompatActivity {
 
         //get the previous 1 day
         Calendar c = Calendar.getInstance();
-        try{
+        try {
             c.setTime(sdf.parse(String.valueOf(currentDate)));
-        }catch(ParseException e){
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         for (int i = 0; i < 7; i++) {
             if (i == 0) {
                 currentWeekday = sdf.format(currentDate);
-                Today = mPreferences.getInt(currentWeekday,0);
-                TodayMoodNote = mPreferences.getString(currentWeekday + "moodnote","000");
-                Log.d(TAG, currentWeekday+": "+Today);
-                Log.d(TAG, currentWeekday+" moodnote: "+TodayMoodNote);
+                Today = mPreferences.getInt(currentWeekday, 0);
+                TodayMoodNote = mPreferences.getString(currentWeekday + "moodnote", "000");
+                Log.d(TAG, currentWeekday + ": " + Today);
+                Log.d(TAG, currentWeekday + " moodnote: " + TodayMoodNote);
             } else {
                 //Decrementing the date by 1 day
                 c.add(Calendar.DAY_OF_MONTH, -1);
                 Tminus1day = sdf.format(c.getTime());
+                currentWeekday = Tminus1day;
                 Today = mPreferences.getInt(Tminus1day, 0);
                 TodayMoodNote = mPreferences.getString(Tminus1day + "moodnote", "000");
                 Log.d(TAG, Tminus1day + ": " + Today);
                 Log.d(TAG, Tminus1day + " moodnote: " + TodayMoodNote);
             }
-            // hook the data to the interface layout
 
-            Log.d(TAG, "day.get(i): " + days.get(i));
-            Log.d(TAG, "resID: " + resID);
-            lltoday = (LinearLayout) findViewById(days.get(i)); //(int)days.get(0)
-            switch(Today) {
+            // hook the data to the interface layout
+            lltoday = (LinearLayout) findViewById(days.get(i));
+            switch (Today) {
                 case 1:
-                    percent = (float) Today/5;
+                    percent = .9999f;
                     lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorYellow));
                     Log.d(TAG, "onCreate: setting background color to yellow");
                     break;
                 case 2:
-                    percent = (float) Today/5;
+                    percent = .8f;
                     lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGreen));
                     Log.d(TAG, "onCreate: setting background color to green");
                     break;
                 case 3:
-                    percent = (float) Today/5;
+                    percent = .6f;
                     lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBlue));
                     Log.d(TAG, "onCreate: setting background color to blue");
                     break;
                 case 4:
-                    percent = (float) Today/5;
+                    percent = .4f;
                     lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorGrey));
                     Log.d(TAG, "onCreate: setting background color to grey");
                     break;
                 case 5:
-                    percent = .9999f;
+                    percent = .2f;
                     lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed));
                     Log.d(TAG, "onCreate: setting background color to red");
                     break;
@@ -142,30 +138,17 @@ public class MoodChartActivity extends AppCompatActivity {
             constraintSet.applyTo(clmoodchartlayout);
 
             //display the 000 for this day, if it exists
-            ivToday = (ImageView) findViewById(mood_charts.get(i));
+            ImageView ivToday = (ImageView) findViewById(mood_charts.get(i));
             if (TodayMoodNote != "000") {
-                //display the 000 on the screen and add a clickable event to it.
+                final String mymoodnote = TodayMoodNote;
                 ivToday.setVisibility(View.VISIBLE);
                 ivToday.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View arg0) {
-                        showDialog(arg0);
+                        Toast.makeText(arg0.getContext(), mymoodnote, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         }
-    }
-
-    private void showDialog(View arg0) {
-        final String moodnote = mPreferences.getString(currentWeekday + "moodnote", "000");
-        AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
-                .setTitle("Mood Log")
-                .setMessage(moodnote)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                })
-                .create();
-        alertDialog.show();
     }
 }
