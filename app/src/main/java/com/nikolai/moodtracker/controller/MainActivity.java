@@ -122,8 +122,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     };
 
-    //TODO: split into smaller methods of oncreate
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -150,8 +148,11 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             preferencesEditor = mPreferences.edit();
             preferencesEditor.remove(currentWeekday + "moodnote");
             preferencesEditor.apply();
+            setContentView(R.layout.activity_mood_chart);
             ImageView ivToday = (ImageView) findViewById(R.id.today_mood_note);
             ivToday.setVisibility(View.INVISIBLE);
+            setContentView(R.layout.activity_main);
+
         }
     }
 

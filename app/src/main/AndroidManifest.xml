@@ -10,8 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".controller.PieChartActivity"
+            android:label="@string/title_activity_pie_chart"
+            android:parentActivityName=".controller.MoodChartActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nikolai.moodtracker.controller.MoodChartActivity" />
+        </activity>
+        <activity
             android:name=".controller.MoodChartActivity"
-            android:label="Mood Chart"></activity>
+            android:label="Mood Chart"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
         <receiver android:name=".controller.AlarmReceiver" />
 

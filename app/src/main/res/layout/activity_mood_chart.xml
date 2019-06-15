@@ -6,15 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
     <LinearLayout
         android:id="@+id/today"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/colorYellow"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/my_toolbar"
         app:layout_constraintWidth_percent=".8">
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +49,7 @@
         android:layout_height="0dp"
         android:background="@color/colorGreen"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/today"
         app:layout_constraintWidth_percent=".6">
@@ -64,7 +74,7 @@
         android:layout_height="0dp"
         android:background="@color/colorGreen"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/one_day_ago"
         app:layout_constraintWidth_percent=".6">
@@ -89,7 +99,7 @@
         android:layout_height="0dp"
         android:background="@color/colorGreen"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/two_days_ago"
         app:layout_constraintWidth_percent=".6">
@@ -114,7 +124,7 @@
         android:layout_height="0dp"
         android:background="@color/colorGreen"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/three_days_ago"
         app:layout_constraintWidth_percent=".6">
@@ -139,7 +149,7 @@
         android:layout_height="0dp"
         android:background="@color/colorGreen"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/four_days_ago"
         app:layout_constraintWidth_percent=".6">
@@ -164,7 +174,7 @@
         android:layout_height="0dp"
         android:background="@color/colorGreen"
         android:orientation="vertical"
-        app:layout_constraintHeight_percent=".1428"
+        app:layout_constraintHeight_percent=".125"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/five_days_ago"
         app:layout_constraintWidth_percent=".6">

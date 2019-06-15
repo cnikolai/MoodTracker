@@ -1,12 +1,16 @@
 package com.nikolai.moodtracker.controller;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,15 +41,46 @@ public class MoodChartActivity extends AppCompatActivity {
     // Name of shared preferences file
     private String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
-    private SharedPreferences.Editor preferencesEditor;
     public static final String TAG = "MoodChartActivity";
-    private int resID;
     private LinearLayout ll;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_mood_chart:
+                //create new activity
+                Intent newIntent = new Intent(this, PieChartActivity.class);
+                //start new activity
+                startActivity(newIntent);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_chart);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //myToolbar.setTitle("Mood Chart");
+        myToolbar.inflateMenu(R.menu.menu_main);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); TODO: //have to put as parent activity in manifest
+
+
         ArrayList<Integer> days = new ArrayList<Integer>();
         days.add(R.id.today);
         days.add(R.id.one_day_ago);
@@ -127,7 +162,7 @@ public class MoodChartActivity extends AppCompatActivity {
                     //there is no data for this day
                     percent = .9999f;
                     lltoday.setBackgroundColor(ContextCompat.getColor(this, R.color.colorWhite));
-                    Log.d(TAG, "onCreate: setting background color to green inside default");
+                    Log.d(TAG, "onCreate: setting background color to white inside default");
             }
 
             //set the constraint width (width of the layout for the day)
