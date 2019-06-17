@@ -49,6 +49,7 @@ public class PieChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pie_chart);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Mood Pie Chart");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
