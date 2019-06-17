@@ -15,15 +15,15 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nikolai.moodtracker.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PieChartActivity extends AppCompatActivity {
 
-    public static final String TAG = "PieChartActivity";
+    private static final String TAG = "PieChartActivity";
 
-    private ArrayList<String> days = new ArrayList<String>();
-    private ArrayList<Integer> mood = new ArrayList<Integer>();
-    private ArrayList<Integer> resource_name = new ArrayList<Integer>();
-    private ArrayList<String> mood_name = new ArrayList<String>();
+    private final List<String> days = new ArrayList<>();
+    private final List<Integer> mood = new ArrayList<>();
+    private final List<String> mood_name = new ArrayList<>();
 
     private int sum_super_happy = 0;
     private int sum_happy = 0;
@@ -31,17 +31,16 @@ public class PieChartActivity extends AppCompatActivity {
     private int sum_disappointed = 0;
     private int sum_sad = 0;
 
-    private ArrayList<Integer> colors = new ArrayList<Integer>();
-
     // Shared preferences object
     private SharedPreferences mPreferences;
     // Name of shared preferences file
-    private String sharedPrefFile =
+    private final String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
 
     /**
      * Starts when the activity is created.  Sets up instance variables.
-     * @param savedInstanceState
+     *
+     * @param savedInstanceState state of view before when it was killed by system
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,7 @@ public class PieChartActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Mood Pie Chart");
+        toolbar.setTitleTextColor(Color.BLACK);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -61,18 +61,6 @@ public class PieChartActivity extends AppCompatActivity {
         days.add("Fri");
         days.add("Sat");
         days.add("Sun");
-
-        resource_name.add(R.id.stats_progressbar_sad);
-        resource_name.add(R.id.stats_progressbar_disappointed);
-        resource_name.add(R.id.stats_progressbar_normal);
-        resource_name.add(R.id.stats_progressbar_happy);
-        resource_name.add(R.id.stats_progressbar_super_happy);
-
-        colors.add(R.color.colorRed);
-        colors.add(R.color.colorGrey);
-        colors.add(R.color.colorBlue);
-        colors.add(R.color.colorGreen);
-        colors.add(R.color.colorYellow);
 
         mood_name.add("Sad");
         mood_name.add("Disappointed");
@@ -91,28 +79,26 @@ public class PieChartActivity extends AppCompatActivity {
         PieChart pieChart = findViewById(R.id.pieChart);
         //pieChart.setUsePercentValues(true);
 
-        ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
-        for (int i=0; i < 5; i++) {
+        List<PieEntry> yvalues = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
             Log.d(TAG, "updateChart: mood.get(i)sums:" + mood.get(i));
             float temp = (float) mood.get(i) / 7;
             Log.d(TAG, "updateChart: temp: " + temp);
             float progress = temp * 100;
             Log.d(TAG, "updateChart: progress: " + progress);
             if (progress == 0) {
-                yvalues.add(new PieEntry(progress,i));
-            }
-            else {
+                yvalues.add(new PieEntry(progress, i));
+            } else {
                 yvalues.add(new PieEntry(progress, mood_name.get(i), i));
             }
         }
 
-        PieDataSet dataSet = new PieDataSet(yvalues,"");
+        PieDataSet dataSet = new PieDataSet(yvalues, "");
         PieData data = new PieData(dataSet);
 
         data.setValueFormatter(new PercentFormatter());
         pieChart.setData(data);
 
-        //pieChart.setDrawHoleEnabled(false);
         pieChart.setTransparentCircleRadius(0f);
         pieChart.setHoleRadius(0f);
 
@@ -123,10 +109,10 @@ public class PieChartActivity extends AppCompatActivity {
                 Color.parseColor("#F8EC50"),
         });
 
-        //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         data.setValueTextSize(20f);
         data.setValueTextColor(Color.DKGRAY);
 
+        pieChart.getDescription().setEnabled(false);
     }
 
     /**
@@ -136,29 +122,29 @@ public class PieChartActivity extends AppCompatActivity {
         int Today;
         for (int i = 0; i < 7; i++) {
             Today = mPreferences.getInt(days.get(i), 0);
-            Log.d(TAG, "calculatePercents: "+days.get(i)+": "+Today);
+            Log.d(TAG, "calculatePercents: " + days.get(i) + ": " + Today);
             switch (Today) {
                 case 0:
                     break;
                 case 1:
-                    sum_super_happy+=1;
-                    Log.d(TAG, "calculatePercents: sum_super_happy: "+sum_super_happy);
+                    sum_super_happy += 1;
+                    Log.d(TAG, "calculatePercents: sum_super_happy: " + sum_super_happy);
                     break;
                 case 2:
-                    sum_happy+=1;
-                    Log.d(TAG, "calculatePercents: sum_happy: "+sum_happy);
+                    sum_happy += 1;
+                    Log.d(TAG, "calculatePercents: sum_happy: " + sum_happy);
                     break;
                 case 3:
-                    sum_normal+=1;
-                    Log.d(TAG, "calculatePercents: sum_normal: "+sum_normal);
+                    sum_normal += 1;
+                    Log.d(TAG, "calculatePercents: sum_normal: " + sum_normal);
                     break;
                 case 4:
-                    sum_disappointed+=1;
-                    Log.d(TAG, "calculatePercents: sum_disappointed: "+sum_disappointed);
+                    sum_disappointed += 1;
+                    Log.d(TAG, "calculatePercents: sum_disappointed: " + sum_disappointed);
                     break;
                 case 5:
-                    sum_sad+=1;
-                    Log.d(TAG, "calculatePercents: sum_sad: "+sum_sad);
+                    sum_sad += 1;
+                    Log.d(TAG, "calculatePercents: sum_sad: " + sum_sad);
                     break;
             }
         }

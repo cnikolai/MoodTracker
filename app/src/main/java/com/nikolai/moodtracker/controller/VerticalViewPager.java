@@ -28,10 +28,12 @@ public class VerticalViewPager extends ViewPager {
     public VerticalViewPager(Context context) {
         this(context, null);
     }
+
     public VerticalViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
+
     /**
      * @return {@code false} since a vertical view pager can never be scrolled horizontally
      */
@@ -39,6 +41,7 @@ public class VerticalViewPager extends ViewPager {
     public boolean canScrollHorizontally(int direction) {
         return false;
     }
+
     /**
      * @return {@code true} iff a normal view pager would support horizontal scrolling at this time
      */
@@ -46,12 +49,14 @@ public class VerticalViewPager extends ViewPager {
     public boolean canScrollVertically(int direction) {
         return super.canScrollHorizontally(direction);
     }
+
     private void init() {
         // Make page transit vertical
         setPageTransformer(true, new VerticalPageTransformer());
         // Get rid of the overscroll drawing that happens on the left and right (the ripple)
         setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         final boolean toIntercept = super.onInterceptTouchEvent(flipXY(ev));
@@ -59,13 +64,44 @@ public class VerticalViewPager extends ViewPager {
         flipXY(ev);
         return toIntercept;
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         final boolean toHandle = super.onTouchEvent(flipXY(ev));
         // Return MotionEvent to normal
         flipXY(ev);
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //some code....
+                break;
+            case MotionEvent.ACTION_UP:
+                this.performClick();
+                break;
+            default:
+                break;
+        }
         return toHandle;
     }
+
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //some code....
+                break;
+            case MotionEvent.ACTION_UP:
+                v.performClick();
+                break;
+            default:
+                break;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean performClick() {
+       return super.performClick();
+    }
+
     private MotionEvent flipXY(MotionEvent ev) {
         final float width = getWidth();
         final float height = getHeight();
@@ -74,6 +110,7 @@ public class VerticalViewPager extends ViewPager {
         ev.setLocation(x, y);
         return ev;
     }
+
     private static final class VerticalPageTransformer implements ViewPager.PageTransformer {
         @Override
         public void transformPage(View view, float position) {

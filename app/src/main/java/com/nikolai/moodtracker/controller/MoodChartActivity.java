@@ -23,8 +23,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class MoodChartActivity extends AppCompatActivity {
+
+    private DataStorage dataStorage;
 
     private String currentWeekday;
     private int Today;
@@ -39,15 +43,16 @@ public class MoodChartActivity extends AppCompatActivity {
     private SharedPreferences mPreferences;
 
     // Name of shared preferences file
-    private String sharedPrefFile =
+    private final String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
-    public static final String TAG = "MoodChartActivity";
+    private static final String TAG = "MoodChartActivity";
     private LinearLayout ll;
 
     /**
      * when the pie chart icon on the toolbar is selected, this method creates a new intent for the PieChartActivity and starts it.
+     *
      * @param item the menu item to be selected (menu item is from menu resource).
-     * @return
+     * @return a boolean
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -69,8 +74,9 @@ public class MoodChartActivity extends AppCompatActivity {
 
     /**
      * called to inflate the main menu for the toolbar
-     * @param menu
-     * @return
+     *
+     * @param menu menu items from menu_main (there is only one item in this case)
+     * @return a boolean
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,18 +87,19 @@ public class MoodChartActivity extends AppCompatActivity {
 
     /**
      * called when this activity is created
-     * @param savedInstanceState
+     *
+     * @param savedInstanceState state of view before when it was killed by system
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_chart);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         myToolbar.inflateMenu(R.menu.menu_main);
 
-        ArrayList<Integer> days = new ArrayList<Integer>();
+        List<Integer> days = new ArrayList<>();
         days.add(R.id.today);
         days.add(R.id.one_day_ago);
         days.add(R.id.two_days_ago);
@@ -101,7 +108,7 @@ public class MoodChartActivity extends AppCompatActivity {
         days.add(R.id.five_days_ago);
         days.add(R.id.six_days_ago);
 
-        ArrayList<Integer> mood_charts = new ArrayList<Integer>();
+        List<Integer> mood_charts = new ArrayList<>();
         mood_charts.add(R.id.today_mood_note);
         mood_charts.add(R.id.one_day_ago_mood_note);
         mood_charts.add(R.id.two_days_ago_mood_note);
@@ -111,9 +118,10 @@ public class MoodChartActivity extends AppCompatActivity {
         mood_charts.add(R.id.six_days_ago_mood_note);
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        //dataStorage = new DataStorage(this);
 
         // retrieve shared preferences for last 7 days
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE", Locale.US);
         Date currentDate = new Date();
         Calendar c = Calendar.getInstance();
         try {
@@ -141,7 +149,7 @@ public class MoodChartActivity extends AppCompatActivity {
             }
 
             // hook the data to the interface layout
-            lltoday = (LinearLayout) findViewById(days.get(i));
+            lltoday = findViewById(days.get(i));
             switch (Today) {
                 case 1:
                     percent = .9999f;
@@ -176,15 +184,15 @@ public class MoodChartActivity extends AppCompatActivity {
             }
 
             //set the constraint width (width of the layout for the day)
-            clmoodchartlayout = (ConstraintLayout) findViewById(R.id.mood_chart_parent);
+            clmoodchartlayout = findViewById(R.id.mood_chart_parent);
             constraintSet = new ConstraintSet();
             constraintSet.clone(clmoodchartlayout);
             constraintSet.constrainPercentWidth(days.get(i), percent);
             constraintSet.applyTo(clmoodchartlayout);
 
             //display the the mood note for this day, if it exists
-            ImageView ivToday = (ImageView) findViewById(mood_charts.get(i));
-            if (TodayMoodNote != "000") {
+            ImageView ivToday = findViewById(mood_charts.get(i));
+            if (!TodayMoodNote.equals("000")) {
                 final String mymoodnote = TodayMoodNote;
                 ivToday.setVisibility(View.VISIBLE);
                 ivToday.setOnClickListener(new View.OnClickListener() {

@@ -5,14 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorGreen">
 
-    <!--<TextView-->
-        <!--android:id="@+id/textview"-->
-        <!--android:textSize="30sp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerInParent="true" />-->
-
     <ImageView
+        android:contentDescription="@string/smiley_face"
         android:id="@+id/smiley_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,21 +21,24 @@
         android:clickable="false">
 
         <ImageButton
+            android:contentDescription="@string/mood_log_icon"
             android:id="@+id/mood_log"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="20dp"
             android:background="@null"
-            android:src="@drawable/ic_note_add_black_50dp" />
+            app:srcCompat="@drawable/ic_note_add_black_50dp" />
 
         <ImageButton
+            android:contentDescription="@string/mood_chart_icon"
             android:id="@+id/mood_chart"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="20dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:background="@null"
-            android:src="@drawable/ic_restore_black_50dp" />
+            app:srcCompat="@drawable/ic_restore_black_50dp" />
     </RelativeLayout>
 
 </RelativeLayout>

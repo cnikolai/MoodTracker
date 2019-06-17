@@ -3,7 +3,6 @@ package com.nikolai.moodtracker.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,14 +18,13 @@ import com.nikolai.moodtracker.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static android.content.Context.MODE_PRIVATE;
+import java.util.Locale;
 
 public class MoodFragment extends Fragment {
 
     private static final String MY_NUM_KEY = "num";
     private static final String MY_COLOR_KEY = "color";
-    public static final String SMILEY_TYPE = "smiley_type";
+    private static final String SMILEY_TYPE = "smiley_type";
 
     private int mNum;
     private int mColor;
@@ -36,21 +34,21 @@ public class MoodFragment extends Fragment {
     private ImageButton mood_log;
     private ImageButton mood_chart;
 
-    public static final String TAG = "MoodFragment";
-
-    private SharedPreferences.Editor preferencesEditor;
+    private static final String TAG = "MoodFragment";
 
     // Shared preferences object
-    private SharedPreferences mPreferences;
+    //private SharedPreferences mPreferences;
 
     // Name of shared preferences file
-    private String sharedPrefFile =
+    private final String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
+    private DataStorage dataStorage;
 
     /**
      * Instantiates a new fragment for each mood.  Passes arguments to the fragment. In this case, the number of the fragment, the color of the fragment layout, and the picture of the fragment that corresponds to the color and number of the fragment.
-     * @param num the number of the fragment
-     * @param color the color that corresponds to the fragment mood that is being displayed
+     *
+     * @param num         the number of the fragment
+     * @param color       the color that corresponds to the fragment mood that is being displayed
      * @param smiley_type the picture that corresponds to the fragment mood that is being displayed
      * @return a fragment for each mood
      */
@@ -68,7 +66,8 @@ public class MoodFragment extends Fragment {
 
     /**
      * Called when this fragment is started.  Gets the parameters that have been passed to it. Sets them to default values.
-     * @param savedInstanceState
+     *
+     * @param savedInstanceState state of view before when it was killed by system
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +81,7 @@ public class MoodFragment extends Fragment {
 
     /**
      * returns the index of the fragment that we are on
+     *
      * @return the index of the fragment that we are on
      */
     public int getShownIndex() {
@@ -90,24 +90,27 @@ public class MoodFragment extends Fragment {
 
     /**
      * Called when the view is created.
+     *
      * @param inflater prepares and sets the layout
      * @param container
-     * @param savedInstanceState
+     * @param savedInstanceState state of view before when it was killed by system
      * @return a view
      */
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        //mPreferences = this.getContext().getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        dataStorage = new DataStorage(this.getContext());
+
 
         View v = inflater.inflate(R.layout.fragment_one, container, false);
 
         //change the image and the background color of the screen as the screen is swiped
         v.setBackgroundColor(mColor);
-        ImageView image = (ImageView) v.findViewById(R.id.smiley_image);
+        ImageView image = v.findViewById(R.id.smiley_image);
         image.setImageResource(mImageName);
         Log.d(TAG, "onCreateView: mNum: " + mNum);
-        mood_log = (ImageButton) v.findViewById(R.id.mood_log);
+        mood_log = v.findViewById(R.id.mood_log);
         mood_log.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -116,7 +119,7 @@ public class MoodFragment extends Fragment {
             }
 
         });
-        mood_chart = (ImageButton) v.findViewById(R.id.mood_chart);
+        mood_chart = v.findViewById(R.id.mood_chart);
         mood_chart.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -131,31 +134,33 @@ public class MoodFragment extends Fragment {
 
     /**
      * allows a user to enter text into a mood note
+     *
      * @param arg0 the view that we are on
      */
     private void showDialog(View arg0) {
         final EditText editText = new EditText(arg0.getContext());
         editText.setHint("Enter your mood log entry here...");
         AlertDialog alertDialog = new AlertDialog.Builder(arg0.getContext())
-            //Read Update
-            .setTitle("Mood Log")
-            .setView(editText)
-            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                SimpleDateFormat sdf = new SimpleDateFormat("EEE");
-                Date currentDate = new Date();
-                currentWeekday = sdf.format(currentDate);
-                preferencesEditor = mPreferences.edit();
-                preferencesEditor.putString(currentWeekday+"moodnote", editText.getText().toString().trim());
-                preferencesEditor.apply();
-                Log.d(TAG, "inside edit text of moodfragment: " + editText.getText().toString().trim());
-            }
-            })
-            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            })
-            .create();
+                //Read Update
+                .setTitle("Mood Log")
+                .setView(editText)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("EEE", Locale.US);
+                        Date currentDate = new Date();
+                        currentWeekday = sdf.format(currentDate);
+//                        preferencesEditor = mPreferences.edit();
+//                        preferencesEditor.putString(currentWeekday + "moodnote", editText.getText().toString().trim());
+//                        preferencesEditor.apply();
+                          dataStorage.storeStringData(currentWeekday + "moodnote", editText.getText().toString().trim());
+                        Log.d(TAG, "inside edit text of moodfragment: " + editText.getText().toString().trim());
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .create();
         alertDialog.show();
     }
 
@@ -163,7 +168,7 @@ public class MoodFragment extends Fragment {
      * lifecycle method of the fragment.  Called when the fragment resumes.
      */
     @Override
-    public void onResume () {
+    public void onResume() {
         super.onResume();
         Log.d(TAG, "inside onResume of fragment: " + mNum);
     }

@@ -5,11 +5,7 @@
         android:id="@+id/action_mood_chart"
         android:icon="@drawable/ic_pie_chart_black_24dp"
         android:title="@string/mood_chart"
+        android:contentDescription="@string/mood_pie_chart_icon"
         app:showAsAction="always" />
 
-    <!--<item-->
-        <!--android:id="@+id/action_settings"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:title="@string/action_settings"-->
-        <!--app:showAsAction="always" />-->
 </menu>

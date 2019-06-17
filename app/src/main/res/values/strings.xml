@@ -1,16 +1,25 @@
 <resources>
     <string name="app_name">MoodTracker</string>
-    <string name="action_settings">Settings</string>
-    <string name="OneWeekAgo">One Week Ago</string>
     <string name="six_days_ago">Six days ago</string>
     <string name="one_day_ago">One day ago</string>
     <string name="two_days_ago">Two days ago</string>
     <string name="three_days_ago">Three days ago</string>
     <string name="four_days_ago">Four days ago</string>
     <string name="five_days_ago">Five days ago</string>
-    <string name="title_activity_mood_chart">MoodChartActivity</string>
     <string name="mood_chart">Mood Chart</string>
     <string name="pie_chart_activity">Pie Chart Activity</string>
-    <string name="title_activity_pie_chart">PieChartActivity</string>
-    <string name="mood_by_week">Mood % by Week</string>
+    <string name="smiley_face">smiley face</string>
+    <string name="today">Today</string>
+    <string name="today_mood_note">Today Mood Note</string>
+    <string name="one_day_ago_mood_note">One day ago mood note</string>
+    <string name="two_days_ago_mood_note">Two days ago mood note</string>
+    <string name="three_days_ago_mood_note">Three days ago mood note</string>
+    <string name="four_days_ago_mood_note">Four days ago mood note</string>
+    <string name="five_days_ago_mood_note">Five days ago mood note</string>
+    <string name="six_days_ago_mood_note">Six days ago mood note</string>
+    <string name="mood_log_icon">Mood log icon</string>
+    <string name="mood_chart_icon">Mood chart icon</string>
+    <string name="mood_pie_chart_icon">Mood Pie Chart Icon</string>
+    <string name="mood_by_week">Mood &#37; by Day</string>
+    <string name="title_activity_pie_chart">Pie Chart Activity</string>
 </resources>

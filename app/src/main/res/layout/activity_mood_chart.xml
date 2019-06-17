@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mood_chart_parent"
     android:layout_width="match_parent"
@@ -12,9 +11,10 @@
         android:layout_height="@dimen/toolbar_height"
         android:background="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
-        android:elevation="4dp"
+        android:minHeight="70dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
 
     <LinearLayout
         android:id="@+id/today"
@@ -26,23 +26,29 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/my_toolbar"
         app:layout_constraintWidth_percent=".8">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Today"/>
+            android:text="@string/today" />
 
         <ImageView
+            android:contentDescription="@string/today_mood_note"
             android:id="@+id/today_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
             android:paddingBottom="10dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/one_day_ago"
         android:layout_width="0dp"
@@ -53,21 +59,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/today"
         app:layout_constraintWidth_percent=".6">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/one_day_ago"/>
+            android:text="@string/one_day_ago" />
+
         <ImageView
+            android:contentDescription="@string/one_day_ago_mood_note"
             android:id="@+id/one_day_ago_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
             android:paddingBottom="10dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/two_days_ago"
         android:layout_width="0dp"
@@ -78,21 +91,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/one_day_ago"
         app:layout_constraintWidth_percent=".6">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/two_days_ago"/>
+            android:text="@string/two_days_ago" />
+
         <ImageView
+            android:contentDescription="@string/two_days_ago_mood_note"
             android:id="@+id/two_days_ago_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
             android:paddingBottom="10dp"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/three_days_ago"
         android:layout_width="0dp"
@@ -103,21 +123,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/two_days_ago"
         app:layout_constraintWidth_percent=".6">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/three_days_ago"/>
+            android:text="@string/three_days_ago" />
+
         <ImageView
+            android:contentDescription="@string/three_days_ago_mood_note"
             android:id="@+id/three_days_ago_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
             android:paddingBottom="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/four_days_ago"
         android:layout_width="0dp"
@@ -128,21 +155,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/three_days_ago"
         app:layout_constraintWidth_percent=".6">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/four_days_ago"/>
+            android:text="@string/four_days_ago" />
+
         <ImageView
+            android:contentDescription="@string/four_days_ago_mood_note"
             android:id="@+id/four_days_ago_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
             android:paddingBottom="10dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/five_days_ago"
         android:layout_width="0dp"
@@ -153,21 +187,28 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/four_days_ago"
         app:layout_constraintWidth_percent=".6">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/five_days_ago"/>
+            android:text="@string/five_days_ago" />
+
         <ImageView
+            android:contentDescription="@string/five_days_ago_mood_note"
             android:id="@+id/five_days_ago_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
             android:paddingBottom="10dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/six_days_ago"
         android:layout_width="0dp"
@@ -178,17 +219,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/five_days_ago"
         app:layout_constraintWidth_percent=".6">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/six_days_ago"/>
+            android:text="@string/six_days_ago" />
+
         <ImageView
+            android:contentDescription="@string/six_days_ago_mood_note"
             android:id="@+id/six_days_ago_mood_note"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="right"
-            android:layout_margin="20dp"
+            android:layout_gravity="end"
+            android:paddingRight="10dp"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="10dp"
             android:paddingBottom="10dp"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_chat_black_24dp" />

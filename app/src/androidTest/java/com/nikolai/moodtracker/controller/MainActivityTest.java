@@ -1,8 +1,6 @@
 package com.nikolai.moodtracker.controller;
 
 
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
@@ -142,13 +140,12 @@ public class MainActivityTest {
     }
 
 
-    @Test
-    public void testSetAlarm() throws Exception {
-        AlarmReceiver receiver = new AlarmReceiver();
-        receiver.setAlarm(context);
-        assertThat(isAlarmSet()).isTrue();
-    }
-
+//    @Test
+//    public void testSetAlarm() throws Exception {
+//        AlarmReceiver receiver = new AlarmReceiver();
+//        receiver.setAlarm(context);
+//        assertThat(isAlarmSet()).isTrue();
+//    }
 
 
 //    @Test
