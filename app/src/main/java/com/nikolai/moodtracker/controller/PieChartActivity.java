@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ProgressBar;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -21,16 +20,10 @@ public class PieChartActivity extends AppCompatActivity {
 
     public static final String TAG = "PieChartActivity";
 
-    private int percenSupertHappy = 0;
-    private int percentHappy = 0;
-    private int percentNormal = 0;
-    private int percentDisappointed = 0;
-    private int percentSad = 0;
     private ArrayList<String> days = new ArrayList<String>();
     private ArrayList<Integer> mood = new ArrayList<Integer>();
     private ArrayList<Integer> resource_name = new ArrayList<Integer>();
     private ArrayList<String> mood_name = new ArrayList<String>();
-
 
     private int sum_super_happy = 0;
     private int sum_happy = 0;
@@ -46,6 +39,10 @@ public class PieChartActivity extends AppCompatActivity {
     private String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
 
+    /**
+     * Starts when the activity is created.  Sets up instance variables.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +80,12 @@ public class PieChartActivity extends AppCompatActivity {
         mood_name.add("Super Happy");
 
         calculatePercents();
-        //updateChart();
         drawChart();
     }
 
+    /**
+     * Uses PhilJay MPAndroid Charts (https://github.com/PhilJay/MPAndroidChart) to create a pie chart
+     */
     private void drawChart() {
         PieChart pieChart = findViewById(R.id.pieChart);
         //pieChart.setUsePercentValues(true);
@@ -116,7 +115,6 @@ public class PieChartActivity extends AppCompatActivity {
         pieChart.setTransparentCircleRadius(0f);
         pieChart.setHoleRadius(0f);
 
-        //dataSet.setColors(new int[] { R.color.colorRed, R.color.colorGrey, R.color.colorBlue, R.color.colorGreen, R.color.colorYellow });
         dataSet.setColors(new int[]{Color.parseColor("#DE3C50"),
                 Color.parseColor("#9B9B9B"),
                 Color.parseColor("#468AD9"),
@@ -130,6 +128,9 @@ public class PieChartActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * calculates the percentage of days that each mood takes up during the last 7 days
+     */
     private void calculatePercents() {
         int Today;
         for (int i = 0; i < 7; i++) {
@@ -166,23 +167,5 @@ public class PieChartActivity extends AppCompatActivity {
         mood.add(sum_normal);
         mood.add(sum_happy);
         mood.add(sum_super_happy);
-    }
-
-    private void updateChart(){
-        // Calculate the slice size and update the pie chart:
-        int sum = 0;
-        for (int i=4; i >= 0; i--) {
-            ProgressBar pieChart = findViewById(resource_name.get(i));
-            Log.d(TAG, "updateChart: mood.get(i)sums:" + mood.get(i));
-            float temp = (float) mood.get(i) / 7;
-            Log.d(TAG, "updateChart: temp: " + temp);
-            int progress = (int) (temp * 100);
-            Log.d(TAG, "updateChart: progress: " + progress);
-            sum+=progress;
-            if (progress == 0)
-                pieChart.setProgress(0);
-            else
-                pieChart.setProgress(sum);
-        }
     }
 }

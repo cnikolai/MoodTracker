@@ -16,15 +16,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.nikolai.moodtracker.R;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 
-public class MainActivity extends AppCompatActivity implements Serializable {
+public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     private String currentWeekday;
@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     Calendar calendar;
 
-
+    /**
+     * called when this activity is created.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +102,17 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 //        return service != null;
 //    }
 
-
+    /**
+     *
+     */
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 
         int currentPosition = 0;
 
+        /**
+         * when a new page is selected, then it updates the shared preferences to the current mood
+         * @param newPosition the position of the screen that correlates to the current mood
+         */
         @Override
         public void onPageSelected(int newPosition) {
             currentPosition = newPosition;
@@ -122,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
 
     };
 
+    /**
+     * gets the arguments that have been passed to this intent.  In this case a value of 0 for if it is midnight at the moment.  If it is midnight, then resets the mood day.
+     * @param intent the intent that is being called
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -134,6 +147,9 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
+    /**
+     * at midnight, resets the day to green and the mood to happy.  Initializes the mood note invisible for the day and removes the mood note from the 7th day ago (today) from shared preferences.
+     */
     private void resetDay() {
         //set the task to run in the background, if not already running in foreground
         //moveTaskToBack(true);
@@ -141,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         preferencesEditor = mPreferences.edit();
         preferencesEditor.putInt(currentWeekday, 2);
         preferencesEditor.apply();
+        //sets the current screen to position 1 (green happy mood)
         mPager.setCurrentItem(1);
         //for the mood history, removes mood note from current day
         if (mPreferences.contains(currentWeekday+"moodnote")) {
@@ -156,16 +173,28 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         }
     }
 
+    /**
+     *
+     */
     public class MyAdapter extends FragmentPagerAdapter {
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        /**
+         *
+         * @return the number of user view pages that are created
+         */
         @Override
         public int getCount() {
             return NUMBER_OF_PAGES;
         }
 
+        /**
+         * creates a new mood fragment for each different mood layout screen
+         * @param position the position of the mood fragment in the user view
+         * @return
+         */
         @Override
         public Fragment getItem(int position) {
             switch (position) {

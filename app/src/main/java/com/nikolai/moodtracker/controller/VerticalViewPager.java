@@ -21,6 +21,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * sets up the viewpages as a vertical viewpage scroller rather than a horizontal viewpage scroller
+ */
 public class VerticalViewPager extends ViewPager {
     public VerticalViewPager(Context context) {
         this(context, null);

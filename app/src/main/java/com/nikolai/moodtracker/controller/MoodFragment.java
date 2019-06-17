@@ -31,7 +31,6 @@ public class MoodFragment extends Fragment {
     private int mNum;
     private int mColor;
     private int mImageName;
-    private static int mood_index;
     private String currentWeekday;
 
     private ImageButton mood_log;
@@ -48,7 +47,14 @@ public class MoodFragment extends Fragment {
     private String sharedPrefFile =
             "com.nikolai.moodtracker.moodsharedprefs";
 
-    // You can modify the parameters to pass in whatever you want
+    /**
+     * Instantiates a new fragment for each mood.  Passes arguments to the fragment. In this case, the number of the fragment, the color of the fragment layout, and the picture of the fragment that corresponds to the color and number of the fragment.
+     * @param num the number of the fragment
+     * @param color the color that corresponds to the fragment mood that is being displayed
+     * @param smiley_type the picture that corresponds to the fragment mood that is being displayed
+     * @return a fragment for each mood
+     */
+    // We can modify the parameters to pass in whatever you want
     static MoodFragment newInstance(int num, int color, int smiley_type) {
         //mood_index = num+1;
         MoodFragment f = new MoodFragment();
@@ -60,6 +66,10 @@ public class MoodFragment extends Fragment {
         return f;
     }
 
+    /**
+     * Called when this fragment is started.  Gets the parameters that have been passed to it. Sets them to default values.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +80,21 @@ public class MoodFragment extends Fragment {
 
     }
 
+    /**
+     * returns the index of the fragment that we are on
+     * @return the index of the fragment that we are on
+     */
     public int getShownIndex() {
         return getArguments().getInt(MY_NUM_KEY, 0);
     }
 
-
+    /**
+     * Called when the view is created.
+     * @param inflater prepares and sets the layout
+     * @param container
+     * @param savedInstanceState
+     * @return a view
+     */
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,6 +129,10 @@ public class MoodFragment extends Fragment {
         return v;
     }
 
+    /**
+     * allows a user to enter text into a mood note
+     * @param arg0 the view that we are on
+     */
     private void showDialog(View arg0) {
         final EditText editText = new EditText(arg0.getContext());
         editText.setHint("Enter your mood log entry here...");
@@ -135,6 +159,9 @@ public class MoodFragment extends Fragment {
         alertDialog.show();
     }
 
+    /**
+     * lifecycle method of the fragment.  Called when the fragment resumes.
+     */
     @Override
     public void onResume () {
         super.onResume();

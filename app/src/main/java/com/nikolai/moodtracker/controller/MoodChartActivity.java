@@ -44,6 +44,11 @@ public class MoodChartActivity extends AppCompatActivity {
     public static final String TAG = "MoodChartActivity";
     private LinearLayout ll;
 
+    /**
+     * when the pie chart icon on the toolbar is selected, this method creates a new intent for the PieChartActivity and starts it.
+     * @param item the menu item to be selected (menu item is from menu resource).
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -62,6 +67,11 @@ public class MoodChartActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * called to inflate the main menu for the toolbar
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -69,6 +79,10 @@ public class MoodChartActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * called when this activity is created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +90,7 @@ public class MoodChartActivity extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        //myToolbar.setTitle("Mood Chart");
         myToolbar.inflateMenu(R.menu.menu_main);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true); TODO: //have to put as parent activity in manifest
-
 
         ArrayList<Integer> days = new ArrayList<Integer>();
         days.add(R.id.today);
@@ -104,14 +115,13 @@ public class MoodChartActivity extends AppCompatActivity {
         // retrieve shared preferences for last 7 days
         SimpleDateFormat sdf = new SimpleDateFormat("EEE");
         Date currentDate = new Date();
-
-        //get the previous 1 day
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(sdf.parse(String.valueOf(currentDate)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        //for each of the last 7 weekdays:
         for (int i = 0; i < 7; i++) {
             if (i == 0) {
                 currentWeekday = sdf.format(currentDate);
@@ -172,7 +182,7 @@ public class MoodChartActivity extends AppCompatActivity {
             constraintSet.constrainPercentWidth(days.get(i), percent);
             constraintSet.applyTo(clmoodchartlayout);
 
-            //display the 000 for this day, if it exists
+            //display the the mood note for this day, if it exists
             ImageView ivToday = (ImageView) findViewById(mood_charts.get(i));
             if (TodayMoodNote != "000") {
                 final String mymoodnote = TodayMoodNote;
