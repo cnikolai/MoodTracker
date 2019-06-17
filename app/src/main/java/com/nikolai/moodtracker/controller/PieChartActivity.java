@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -102,6 +103,9 @@ public class PieChartActivity extends AppCompatActivity {
         pieChart.setTransparentCircleRadius(0f);
         pieChart.setHoleRadius(0f);
 
+        Legend legend = pieChart.getLegend();
+        legend.setTextSize(16);
+
         dataSet.setColors(new int[]{Color.parseColor("#DE3C50"),
                 Color.parseColor("#9B9B9B"),
                 Color.parseColor("#468AD9"),
@@ -111,6 +115,8 @@ public class PieChartActivity extends AppCompatActivity {
 
         data.setValueTextSize(20f);
         data.setValueTextColor(Color.DKGRAY);
+        int colorBlack = Color.parseColor("#000000");
+        pieChart.setEntryLabelColor(colorBlack);
 
         pieChart.getDescription().setEnabled(false);
     }
