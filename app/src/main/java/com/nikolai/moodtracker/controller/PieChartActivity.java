@@ -1,12 +1,18 @@
 package com.nikolai.moodtracker.controller;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ProgressBar;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.nikolai.moodtracker.R;
 
 import java.util.ArrayList;
@@ -23,12 +29,16 @@ public class PieChartActivity extends AppCompatActivity {
     private ArrayList<String> days = new ArrayList<String>();
     private ArrayList<Integer> mood = new ArrayList<Integer>();
     private ArrayList<Integer> resource_name = new ArrayList<Integer>();
+    private ArrayList<String> mood_name = new ArrayList<String>();
+
 
     private int sum_super_happy = 0;
     private int sum_happy = 0;
     private int sum_normal = 0;
     private int sum_disappointed = 0;
     private int sum_sad = 0;
+
+    private ArrayList<Integer> colors = new ArrayList<Integer>();
 
     // Shared preferences object
     private SharedPreferences mPreferences;
@@ -60,8 +70,64 @@ public class PieChartActivity extends AppCompatActivity {
         resource_name.add(R.id.stats_progressbar_happy);
         resource_name.add(R.id.stats_progressbar_super_happy);
 
+        colors.add(R.color.colorRed);
+        colors.add(R.color.colorGrey);
+        colors.add(R.color.colorBlue);
+        colors.add(R.color.colorGreen);
+        colors.add(R.color.colorYellow);
+
+        mood_name.add("Sad");
+        mood_name.add("Disappointed");
+        mood_name.add("Normal");
+        mood_name.add("Happy");
+        mood_name.add("Super Happy");
+
         calculatePercents();
-        updateChart();
+        //updateChart();
+        drawChart();
+    }
+
+    private void drawChart() {
+        PieChart pieChart = findViewById(R.id.pieChart);
+        //pieChart.setUsePercentValues(true);
+
+        ArrayList<PieEntry> yvalues = new ArrayList<PieEntry>();
+        for (int i=0; i < 5; i++) {
+            Log.d(TAG, "updateChart: mood.get(i)sums:" + mood.get(i));
+            float temp = (float) mood.get(i) / 7;
+            Log.d(TAG, "updateChart: temp: " + temp);
+            float progress = temp * 100;
+            Log.d(TAG, "updateChart: progress: " + progress);
+            if (progress == 0) {
+                yvalues.add(new PieEntry(progress,i));
+            }
+            else {
+                yvalues.add(new PieEntry(progress, mood_name.get(i), i));
+            }
+        }
+
+        PieDataSet dataSet = new PieDataSet(yvalues,"");
+        PieData data = new PieData(dataSet);
+
+        data.setValueFormatter(new PercentFormatter());
+        pieChart.setData(data);
+
+        //pieChart.setDrawHoleEnabled(false);
+        pieChart.setTransparentCircleRadius(0f);
+        pieChart.setHoleRadius(0f);
+
+        //dataSet.setColors(new int[] { R.color.colorRed, R.color.colorGrey, R.color.colorBlue, R.color.colorGreen, R.color.colorYellow });
+        dataSet.setColors(new int[]{Color.parseColor("#DE3C50"),
+                Color.parseColor("#9B9B9B"),
+                Color.parseColor("#468AD9"),
+                Color.parseColor("#B8E986"),
+                Color.parseColor("#F8EC50"),
+        });
+
+        //dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        data.setValueTextSize(20f);
+        data.setValueTextColor(Color.DKGRAY);
+
     }
 
     private void calculatePercents() {
