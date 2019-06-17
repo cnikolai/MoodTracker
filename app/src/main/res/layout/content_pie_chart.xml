@@ -13,7 +13,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mood % by Week"
+        android:text="@string/mood_by_week"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,22 +31,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
-
-         ProgressBar that represents a total of 100%
-        <!--<ProgressBar-->
-            <!--android:id="@+id/background_progressbar"-->
-            <!--style="?android:attr/progressBarStyleHorizontal"-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="300dp"-->
-            <!--android:indeterminate="false"-->
-            <!--android:max="100"-->
-            <!--android:progress="100"-->
-            <!--android:progressDrawable="@drawable/stats_full"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintHorizontal_bias="0.5"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
 
         <!-- ProgressBar that represents a chart slice, where "android:progress" is the % value of the slice -->
         <ProgressBar
@@ -124,60 +108,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- The text that goes in a center of the chart -->
-        <!--<TextView-->
-            <!--android:id="@+id/number_of_calories"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="1500/2000"-->
-            <!--android:textSize="20sp"-->
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintHorizontal_bias="0.5"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toTopOf="parent" />-->
-        <!-- Doughnut chart ends here -->
-        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
-    <!--<LinearLayout-->
-        <!--android:id="@+id/input"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:padding="16dp"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintHorizontal_bias="0.5"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/constraintLayout">-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/burned"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:hint="Burn."-->
-            <!--android:inputType="number"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:onClick="addBurned"-->
-            <!--android:text="Add" />-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/consumed"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:hint="Cons."-->
-            <!--android:inputType="number"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:onClick="addConsumed"-->
-            <!--android:text="Add" />-->
-    <!--</LinearLayout>-->
 </android.support.constraint.ConstraintLayout>

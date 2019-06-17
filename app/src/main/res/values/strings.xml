@@ -12,4 +12,5 @@
     <string name="mood_chart">Mood Chart</string>
     <string name="pie_chart_activity">Pie Chart Activity</string>
     <string name="title_activity_pie_chart">PieChartActivity</string>
+    <string name="mood_by_week">Mood % by Week</string>
 </resources>
