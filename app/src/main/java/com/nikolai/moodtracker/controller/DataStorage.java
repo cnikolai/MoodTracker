@@ -20,6 +20,7 @@ public class DataStorage {
         mPreferences = context.getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
     }
 
+
     public void storeIntData(String currentWeekday, int currentPosition) {
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.putInt(currentWeekday, currentPosition);
