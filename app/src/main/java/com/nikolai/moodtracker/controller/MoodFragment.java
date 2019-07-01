@@ -36,12 +36,7 @@ public class MoodFragment extends Fragment {
 
     private static final String TAG = "MoodFragment";
 
-    // Shared preferences object
-    //private SharedPreferences mPreferences;
-
     // Name of shared preferences file
-    private final String sharedPrefFile =
-            "com.nikolai.moodtracker.moodsharedprefs";
     private DataStorage dataStorage;
 
     /**

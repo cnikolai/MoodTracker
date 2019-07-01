@@ -1,6 +1,5 @@
 package com.nikolai.moodtracker.controller;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,12 +30,7 @@ public class PieChartActivity extends AppCompatActivity {
     private int sum_normal = 0;
     private int sum_disappointed = 0;
     private int sum_sad = 0;
-
-    // Shared preferences object
-    private SharedPreferences mPreferences;
-    // Name of shared preferences file
-    private final String sharedPrefFile =
-            "com.nikolai.moodtracker.moodsharedprefs";
+    DataStorage dataStorage;
 
     /**
      * Starts when the activity is created.  Sets up instance variables.
@@ -53,7 +47,7 @@ public class PieChartActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.BLACK);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
+        dataStorage = new DataStorage(this);
 
         days.add("Mon");
         days.add("Tue");
@@ -127,7 +121,7 @@ public class PieChartActivity extends AppCompatActivity {
     private void calculatePercents() {
         int Today;
         for (int i = 0; i < 7; i++) {
-            Today = mPreferences.getInt(days.get(i), 0);
+            Today = dataStorage.retrieveIntData(days.get(i), 0);
             Log.d(TAG, "calculatePercents: " + days.get(i) + ": " + Today);
             switch (Today) {
                 case 0:

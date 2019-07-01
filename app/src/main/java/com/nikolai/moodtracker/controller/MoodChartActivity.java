@@ -1,7 +1,6 @@
 package com.nikolai.moodtracker.controller;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
@@ -39,12 +38,6 @@ public class MoodChartActivity extends AppCompatActivity {
     private ConstraintLayout clmoodchartlayout;
     private ConstraintSet constraintSet;
 
-    // Shared preferences object
-    private SharedPreferences mPreferences;
-
-    // Name of shared preferences file
-    private final String sharedPrefFile =
-            "com.nikolai.moodtracker.moodsharedprefs";
     private static final String TAG = "MoodChartActivity";
     private LinearLayout ll;
 
@@ -117,8 +110,7 @@ public class MoodChartActivity extends AppCompatActivity {
         mood_charts.add(R.id.five_days_ago_mood_note);
         mood_charts.add(R.id.six_days_ago_mood_note);
 
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        //dataStorage = new DataStorage(this);
+        dataStorage = new DataStorage(this);
 
         // retrieve shared preferences for last 7 days
         SimpleDateFormat sdf = new SimpleDateFormat("EEE", Locale.US);
@@ -133,8 +125,8 @@ public class MoodChartActivity extends AppCompatActivity {
         for (int i = 0; i < 7; i++) {
             if (i == 0) {
                 currentWeekday = sdf.format(currentDate);
-                Today = mPreferences.getInt(currentWeekday, 0);
-                TodayMoodNote = mPreferences.getString(currentWeekday + "moodnote", "000");
+                Today = dataStorage.retrieveIntData(currentWeekday, 0);
+                TodayMoodNote = dataStorage.retrieveStringData(currentWeekday + "moodnote", "000");
                 Log.d(TAG, currentWeekday + ": " + Today);
                 Log.d(TAG, currentWeekday + " moodnote: " + TodayMoodNote);
             } else {
@@ -142,8 +134,8 @@ public class MoodChartActivity extends AppCompatActivity {
                 c.add(Calendar.DAY_OF_MONTH, -1);
                 Tminus1day = sdf.format(c.getTime());
                 currentWeekday = Tminus1day;
-                Today = mPreferences.getInt(Tminus1day, 0);
-                TodayMoodNote = mPreferences.getString(Tminus1day + "moodnote", "000");
+                Today = dataStorage.retrieveIntData(Tminus1day, 0);
+                TodayMoodNote = dataStorage.retrieveStringData(Tminus1day + "moodnote", "000");
                 Log.d(TAG, Tminus1day + ": " + Today);
                 Log.d(TAG, Tminus1day + " moodnote: " + TodayMoodNote);
             }

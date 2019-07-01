@@ -5,7 +5,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private String currentWeekday;
-    private SharedPreferences.Editor preferencesEditor;
+    //private SharedPreferences.Editor preferencesEditor;
     private PendingIntent pendingIntent;
     private AlarmManager manager;
 
@@ -40,13 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private MyAdapter mAdapter;
     private VerticalViewPager mPager;
 
-    // Shared preferences object
-    private SharedPreferences mPreferences;
-
-    // Name of shared preferences file
-    private final String sharedPrefFile =
-            "com.nikolai.moodtracker.moodsharedprefs";
-
     private Calendar calendar;
     private DataStorage dataStorage;
 
@@ -54,46 +46,42 @@ public class MainActivity extends AppCompatActivity {
      * inserts demo data for each day
      */
     protected void demoData() {
-        preferencesEditor = mPreferences.edit();
         //put the moods for each day
-        preferencesEditor.putInt("Mon", 2);
-        preferencesEditor.putInt("Tue", 1);
-        preferencesEditor.putInt("Wed", 3);
-        preferencesEditor.putInt("Thu", 4);
-        preferencesEditor.putInt("Fri", 5);
-        preferencesEditor.putInt("Sat", 1);
-        preferencesEditor.putInt("Sun", 2);
+        dataStorage.storeIntData("Mon", 2);
+        dataStorage.storeIntData("Tue", 1);
+        dataStorage.storeIntData("Wed", 3);
+        dataStorage.storeIntData("Thu", 4);
+        dataStorage.storeIntData("Fri", 5);
+        dataStorage.storeIntData("Sat", 1);
+        dataStorage.storeIntData("Sun", 2);
 
         //put mood notes for each day desired
-        preferencesEditor.putString("Tuemoodnote", "I'm very very happy today");
-        preferencesEditor.putString("Thumoodnote", "I'm very very sad today");
-        preferencesEditor.putString("Satmoodnote", "I'm doing well today");
-        preferencesEditor.apply();
+        dataStorage.storeStringData("Tuemoodnote", "I'm very very happy today");
+        dataStorage.storeStringData("Thumoodnote", "I'm very very sad today");
+        dataStorage.storeStringData("Satmoodnote", "I'm doing well today");
     }
 
     /**
      * resets demo data for each day
      */
     protected void resetDemoData() {
-        preferencesEditor = mPreferences.edit();
         //removes the moods for each day
-        preferencesEditor.remove("Mon");
-        preferencesEditor.remove("Tue");
-        preferencesEditor.remove("Wed");
-        preferencesEditor.remove("Thu");
-        preferencesEditor.remove("Fri");
-        preferencesEditor.remove("Sat");
-        preferencesEditor.remove("Sun");
+        dataStorage.removeData("Mon");
+        dataStorage.removeData("Tue");
+        dataStorage.removeData("Wed");
+        dataStorage.removeData("Thu");
+        dataStorage.removeData("Fri");
+        dataStorage.removeData("Sat");
+        dataStorage.removeData("Sun");
 
         //removes mood notes for each day desired
-        preferencesEditor.remove("Monmoodnote");
-        preferencesEditor.remove("Tuemoodnote");
-        preferencesEditor.remove("Wedmoodnote");
-        preferencesEditor.remove("Thumoodnote");
-        preferencesEditor.remove("Frimoodnote");
-        preferencesEditor.remove("Satmoodnote");
-        preferencesEditor.remove("Sunmoodnote");
-        preferencesEditor.apply();
+        dataStorage.removeData("Monmoodnote");
+        dataStorage.removeData("Tuemoodnote");
+        dataStorage.removeData("Wedmoodnote");
+        dataStorage.removeData("Thumoodnote");
+        dataStorage.removeData("Frimoodnote");
+        dataStorage.removeData("Satmoodnote");
+        dataStorage.removeData("Sunmoodnote");
     }
 
     /**
@@ -108,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //Log.d(TAG, "instance #:" + this);
 
-        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         dataStorage = new DataStorage(this);
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE", Locale.US);
@@ -120,10 +107,6 @@ public class MainActivity extends AppCompatActivity {
         mPager = findViewById(R.id.viewpager);
         mPager.setAdapter(mAdapter);
         mPager.setCurrentItem(1);
-//        preferencesEditor = mPreferences.edit();
-//        preferencesEditor.putInt(currentWeekday, 2);
-//        preferencesEditor.apply();
-//        dataStorage = new DataStorage(this);
         dataStorage.storeIntData(currentWeekday, 2);
         mPager.addOnPageChangeListener(pageChangeListener);
 
@@ -148,17 +131,6 @@ public class MainActivity extends AppCompatActivity {
         //resetDemoData();
     }
 
-//    private boolean isAlarmSet() {
-//        Intent intent = AlarmReceiver.getTargetIntent(context);
-//        PendingIntent service = PendingIntent.getService(
-//                context,
-//                0,
-//                intent,
-//                PendingIntent.FLAG_NO_CREATE
-//        );
-//        return service != null;
-//    }
-
     /**
      *
      */
@@ -174,9 +146,6 @@ public class MainActivity extends AppCompatActivity {
         public void onPageSelected(int newPosition) {
             currentPosition = newPosition;
             Log.d(TAG, "onPageSelected: currentposition: " + currentPosition);
-//            preferencesEditor = mPreferences.edit();
-//            preferencesEditor.putInt(currentWeekday, currentPosition + 1);
-//            preferencesEditor.apply();
             dataStorage.storeIntData(currentWeekday, currentPosition + 1);
             mPager.setCurrentItem(currentPosition);
 
@@ -212,21 +181,13 @@ public class MainActivity extends AppCompatActivity {
      * at midnight, resets the day to green and the mood to happy.  Initializes the mood note invisible for the day and removes the mood note from the 7th day ago (today) from shared preferences.
      */
     private void resetDay() {
-        //set the task to run in the background, if not already running in foreground
-        //moveTaskToBack(true);
         //for the mood history - resets color to green
-//        preferencesEditor = mPreferences.edit();
-//        preferencesEditor.putInt(currentWeekday, 2);
-//        preferencesEditor.apply();
         dataStorage.storeIntData(currentWeekday, 2);
         //sets the current screen to position 1 (green happy mood)
         mPager.setCurrentItem(1);
         //for the mood history, removes mood note from current day
-        if (mPreferences.contains(currentWeekday + "moodnote")) {
+        if (dataStorage.contains(currentWeekday + "moodnote")) {
             //remove the note from shared preferences
-//            preferencesEditor = mPreferences.edit();
-//            preferencesEditor.remove(currentWeekday + "moodnote");
-//            preferencesEditor.apply();
             dataStorage.removeData(currentWeekday + "moodnote");
             setContentView(R.layout.activity_mood_chart);
             ImageView ivToday = findViewById(R.id.today_mood_note);

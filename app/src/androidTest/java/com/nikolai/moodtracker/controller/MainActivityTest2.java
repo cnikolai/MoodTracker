@@ -23,9 +23,10 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -48,20 +49,10 @@ public class MainActivityTest2 {
                                         0),
                                 0),
                         isDisplayed()));
-        verticalViewPager.perform(swipeRight());
-
-        ViewInteraction verticalViewPager2 = onView(
-                allOf(withId(R.id.viewpager),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        verticalViewPager2.perform(swipeRight());
+        verticalViewPager.perform(swipeLeft());
 
         ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.mood_log),
+                allOf(withId(R.id.mood_log), withContentDescription("Mood log icon"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.RelativeLayout")),
@@ -78,16 +69,47 @@ public class MainActivityTest2 {
                                         0)),
                         0),
                         isDisplayed()));
-        editText.perform(replaceText("testing a new string"), closeSoftKeyboard());
+        editText.perform(replaceText("I'm very happy today because it is not raining!"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(android.R.id.button1), withText("Ok.."),
+                allOf(withId(android.R.id.button1), withText("Ok"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 3)));
         appCompatButton.perform(scrollTo(), click());
+
+        ViewInteraction appCompatImageButton2 = onView(
+                allOf(withId(R.id.mood_chart), withContentDescription("Mood chart icon"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        1),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton2.perform(click());
+
+        ViewInteraction appCompatImageView = onView(
+                allOf(withId(R.id.today_mood_note), withContentDescription("Today Mood Note"),
+                        childAtPosition(
+                                allOf(withId(R.id.today),
+                                        childAtPosition(
+                                                withId(R.id.mood_chart_parent),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        appCompatImageView.perform(click());
+
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.action_mood_chart), withContentDescription("Mood Chart"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.my_toolbar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

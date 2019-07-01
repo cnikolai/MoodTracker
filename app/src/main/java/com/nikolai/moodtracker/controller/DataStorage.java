@@ -32,10 +32,24 @@ public class DataStorage {
         preferencesEditor.apply();
     }
 
+    public int retrieveIntData(String currentWeekday, int defaultValue) {
+        int mPreferencesInt = mPreferences.getInt(currentWeekday, defaultValue);
+        return mPreferencesInt;
+    }
+
+    public String retrieveStringData(String currentWeekday, String defaultValue) {
+        String mPreferencesString = mPreferences.getString(currentWeekday, defaultValue);
+        return mPreferencesString;
+    }
+
     public void removeData(String data) {
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.remove(data);
         preferencesEditor.apply();
+    }
+
+    public boolean contains(String data) {
+        return mPreferences.contains(data);
     }
 
 }
