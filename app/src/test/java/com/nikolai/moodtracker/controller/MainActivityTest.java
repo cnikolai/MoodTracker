@@ -34,82 +34,82 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest2 {
+public class MainActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
     public void mainActivityTest2() {
-        ViewInteraction verticalViewPager = onView(
-                allOf(withId(R.id.viewpager),
+        ViewInteraction verticalViewPager = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.viewpager),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(android.R.id.content),
+                                        ViewMatchers.withId(android.R.id.content),
                                         0),
                                 0),
-                        isDisplayed()));
-        verticalViewPager.perform(swipeLeft());
+                        ViewMatchers.isDisplayed()));
+        verticalViewPager.perform(ViewActions.swipeLeft());
 
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.mood_log), withContentDescription("Mood log icon"),
+        ViewInteraction appCompatImageButton = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.mood_log), ViewMatchers.withContentDescription("Mood log icon"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.RelativeLayout")),
+                                        ViewMatchers.withClassName(Matchers.is("android.widget.RelativeLayout")),
                                         1),
                                 0),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
+                        ViewMatchers.isDisplayed()));
+        appCompatImageButton.perform(ViewActions.click());
 
-        ViewInteraction editText = onView(
-                allOf(childAtPosition(
-                        allOf(withId(android.R.id.custom),
+        ViewInteraction editText = Espresso.onView(
+                Matchers.allOf(childAtPosition(
+                        Matchers.allOf(ViewMatchers.withId(android.R.id.custom),
                                 childAtPosition(
-                                        withClassName(is("android.widget.FrameLayout")),
+                                        ViewMatchers.withClassName(Matchers.is("android.widget.FrameLayout")),
                                         0)),
                         0),
-                        isDisplayed()));
-        editText.perform(replaceText("I'm very happy today because it is not raining!"), closeSoftKeyboard());
+                        ViewMatchers.isDisplayed()));
+        editText.perform(ViewActions.replaceText("I'm very happy today because it is not raining!"), ViewActions.closeSoftKeyboard());
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(android.R.id.button1), withText("Ok"),
+        ViewInteraction appCompatButton = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(android.R.id.button1), ViewMatchers.withText("Ok"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
+                                        ViewMatchers.withClassName(Matchers.is("android.widget.ScrollView")),
                                         0),
                                 3)));
-        appCompatButton.perform(scrollTo(), click());
+        appCompatButton.perform(ViewActions.scrollTo(), ViewActions.click());
 
-        ViewInteraction appCompatImageButton2 = onView(
-                allOf(withId(R.id.mood_chart), withContentDescription("Mood chart icon"),
+        ViewInteraction appCompatImageButton2 = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.mood_chart), ViewMatchers.withContentDescription("Mood chart icon"),
                         childAtPosition(
                                 childAtPosition(
-                                        withClassName(is("android.widget.RelativeLayout")),
+                                        ViewMatchers.withClassName(Matchers.is("android.widget.RelativeLayout")),
                                         1),
                                 1),
-                        isDisplayed()));
-        appCompatImageButton2.perform(click());
+                        ViewMatchers.isDisplayed()));
+        appCompatImageButton2.perform(ViewActions.click());
 
-        ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.today_mood_note), withContentDescription("Today Mood Note"),
+        ViewInteraction appCompatImageView = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.today_mood_note), ViewMatchers.withContentDescription("Today Mood Note"),
                         childAtPosition(
-                                allOf(withId(R.id.today),
+                                Matchers.allOf(ViewMatchers.withId(R.id.today),
                                         childAtPosition(
-                                                withId(R.id.mood_chart_parent),
+                                                ViewMatchers.withId(R.id.mood_chart_parent),
                                                 1)),
                                 1),
-                        isDisplayed()));
-        appCompatImageView.perform(click());
+                        ViewMatchers.isDisplayed()));
+        appCompatImageView.perform(ViewActions.click());
 
-        ViewInteraction actionMenuItemView = onView(
-                allOf(withId(R.id.action_mood_chart), withContentDescription("Mood Chart"),
+        ViewInteraction actionMenuItemView = Espresso.onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.action_mood_chart), ViewMatchers.withContentDescription("Mood Chart"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.my_toolbar),
+                                        ViewMatchers.withId(R.id.my_toolbar),
                                         1),
                                 0),
-                        isDisplayed()));
-        actionMenuItemView.perform(click());
+                        ViewMatchers.isDisplayed()));
+        actionMenuItemView.perform(ViewActions.click());
     }
 
     private static Matcher<View> childAtPosition(
